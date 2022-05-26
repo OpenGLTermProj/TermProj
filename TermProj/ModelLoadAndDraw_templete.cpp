@@ -12,6 +12,7 @@
 #include <glm/glm.hpp> 
 #include <glm/gtc/matrix_transform.hpp> 
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtx/normal.hpp>
 
 
 float g_fDistance = -4.5f;
@@ -132,15 +133,34 @@ bool LoadPly(const char* path,
 
     for (int i = 0; i < nbVertices; i++)
     {
-
+        glm::vec3 tmp;
+        GLfloat trash1, trash2;
+        fscanf(file, "%f %f %f %f %f\n", &tmp.x, &tmp.y, &tmp.z, &trash1, &trash2);
+        out_vertices.push_back(tmp);
+        out_normals.push_back(glm::vec3(0,0,0)); // clear nv
     }
 
     for (int i = 0; i < nbFaces; i++)
     {
+        glm::ivec3 face;
+        unsigned int trash;
+        fscanf(file, "%d %d %d %d\n", &trash, &face.x, &face.y, &face.z);
+        out_faces.push_back(face);
 
+        auto const& p1 = out_vertices[face[0]];
+        auto const& p2 = out_vertices[face[1]];
+        auto const& p3 = out_vertices[face[2]];
+
+        auto f_normal = glm::triangleNormal(p1, p2, p3);
+        
+        for (int j = 0; j < 3; j++)
+        {
+            auto& vn = out_normals[face[j]];
+            vn = glm::normalize(vn + f_normal);
+        }
     }
-    
 }
+
 void MyMouse(int button, int state, int x, int y) {
     switch (button) {
     case GLUT_LEFT_BUTTON:
@@ -225,6 +245,7 @@ void DrawSurface(std::vector < glm::vec3 >& vectices,
             glVertex3f(p[0], p[1], p[2]);
         }
     }
+    
     glEnd();
 }
 
@@ -232,8 +253,19 @@ void DrawWireSurface(std::vector < glm::vec3 >& vectices,
     std::vector < glm::ivec3 >& faces)
 {
     glBegin(GL_LINES);
-
-
+    for (int i = 0; i < faces.size(); i++)
+    {
+        glm::vec3 p1 = vertices[faces[i][0]];
+        glm::vec3 p2 = vertices[faces[i][1]];
+        glm::vec3 p3 = vertices[faces[i][2]];
+        
+        glVertex3f(p1[0], p1[1], p1[2]);
+        glVertex3f(p2[0], p2[1], p2[2]);
+        glVertex3f(p2[0], p2[1], p2[2]);
+        glVertex3f(p3[0], p3[1], p3[2]);
+        glVertex3f(p3[0], p3[1], p3[2]);
+        glVertex3f(p1[0], p1[1], p1[2]);
+    }
     glEnd();
 }
 
@@ -244,13 +276,15 @@ void render(void) {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-
+    
     glTranslatef(0.0f, 0.0f, g_fDistance);
     glRotatef(-g_fSpinY, 1.0f, 0.0f, 0.0f);
     glRotatef(-g_fSpinX, 0.0f, 1.0f, 0.0f);
+    glScalef(18, 18, 18);
 
     //Draw here
-    DrawSurface(vertices,normals,faces);
+    //DrawSurface(vertices,normals,faces);
+    DrawWireSurface(vertices, faces);
 
     glutSwapBuffers();
 }
@@ -272,11 +306,11 @@ void main(int argc, char** argv) {
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     glutInitWindowPosition(100, 100);
     glutInitWindowSize(800, 600);
-    glutCreateWindow("Texture Mapping - Passivity");
+    glutCreateWindow("171413 È²ÈñÀç");
     init();
 
-    LoadObj("Data/bunny/bunny.obj", vertices, faces, uvs, normals);
-    //LoadPly("Data/bunny/bun_zipper_res4.ply", vertices, faces, normals);
+    //LoadObj("../Data/bunny/bunny.obj", vertices, faces, uvs, normals);
+    LoadPly("../Data/bunny/bun_zipper_res3.ply", vertices, faces, normals);
 
     glutDisplayFunc(render);
     glutReshapeFunc(MyReshape);
