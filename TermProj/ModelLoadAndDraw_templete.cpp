@@ -310,7 +310,7 @@ void main(int argc, char** argv) {
     init();
 
     //LoadObj("../Data/bunny/bunny.obj", vertices, faces, uvs, normals);
-    LoadPly("../Data/bunny/bun_zipper_res3.ply", vertices, faces, normals);
+    LoadPly("../Data/bunny/bun_zipper_res4.ply", vertices, faces, normals);
 
     glutDisplayFunc(render);
     glutReshapeFunc(MyReshape);
