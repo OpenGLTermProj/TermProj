@@ -269,13 +269,38 @@ void DrawWireSurface(std::vector < glm::vec3 >& vectices,
     glEnd();
 }
 
+void DrawHUD()
+{
+    glMatrixMode(GL_PROJECTION);
+    glPushMatrix();
+    glLoadIdentity();
+    gluOrtho2D(-1.0, 1.0, 1.0, -1.0);
+
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glLoadIdentity();
+
+    glDisable(GL_LIGHTING);
+    glColor3f(0.0, 1.0, 1.0);
+    glBegin(GL_QUADS);
+    glVertex2f(0.05, 0.05);
+    glVertex2f(0.3, 0.05);
+    glVertex2f(0.3, 0.15);
+    glVertex2f(0.05, 0.15);
+    glEnd();
+    glEnable(GL_LIGHTING);
+
+    glMatrixMode(GL_PROJECTION);
+    glPopMatrix();
+    glMatrixMode(GL_MODELVIEW);
+    glPopMatrix();
+}
 
 
 void render(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-
     
     glTranslatef(0.0f, 0.0f, g_fDistance);
     glRotatef(-g_fSpinY, 1.0f, 0.0f, 0.0f);
@@ -286,6 +311,7 @@ void render(void) {
     //DrawSurface(vertices,normals,faces);
     DrawWireSurface(vertices, faces);
 
+    DrawHUD();
     glutSwapBuffers();
 }
 
