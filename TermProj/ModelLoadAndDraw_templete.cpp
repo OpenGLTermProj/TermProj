@@ -274,7 +274,7 @@ void DrawHUD()
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
     glLoadIdentity();
-    gluOrtho2D(-1.0, 1.0, 1.0, -1.0);
+    gluOrtho2D(0.0, 1.0, 1.0, 0.0);
 
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
