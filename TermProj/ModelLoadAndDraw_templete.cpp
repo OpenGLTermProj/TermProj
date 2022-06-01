@@ -173,9 +173,8 @@ void main(int argc, char** argv) {
     glutCreateWindow("171413 »≤»Ò¿Á");
     init();
 
-   //loadmodel
-    
-
+   //loadmodel   
+ 
     glutDisplayFunc(render);
     glutReshapeFunc(MyReshape);
     glutMouseFunc(MyMouse);
