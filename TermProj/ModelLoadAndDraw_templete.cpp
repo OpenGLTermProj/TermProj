@@ -18,9 +18,10 @@
 #include <glm/gtx/normal.hpp>
 
 
+string table_path = "../Data/table.obj";
+MODEL table;
 
-
-float g_fDistance = -4.5f;
+float g_fDistance = -2.0f;
 float g_fSpinX = 0.0f;
 float g_fSpinY = 0.0f;
 
@@ -143,10 +144,12 @@ void render(void) {
     glTranslatef(0.0f, 0.0f, g_fDistance);
     glRotatef(-g_fSpinY, 1.0f, 0.0f, 0.0f);
     glRotatef(-g_fSpinX, 0.0f, 1.0f, 0.0f);
-    glScalef(18, 18, 18);
+    glScalef(3.0f, 3.0f, 3.0f);
+
 
     //Draw here
     //DrawSurface(vertices,normals,faces);
+    DrawModel(table);
     
 
     DrawHUD();
@@ -162,7 +165,7 @@ void MyReshape(int w, int h) {
     gluPerspective(90, (GLfloat)w / (GLfloat)h, 1.0, 100.0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    gluLookAt(0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    gluLookAt(0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 }
 
 void main(int argc, char** argv) {
@@ -170,10 +173,11 @@ void main(int argc, char** argv) {
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     glutInitWindowPosition(100, 100);
     glutInitWindowSize(800, 600);
-    glutCreateWindow("171413 »≤»Ò¿Á");
+    glutCreateWindow("opengl TermProject");
     init();
 
    //loadmodel   
+    LoadModel(table_path.c_str(), table);
  
     glutDisplayFunc(render);
     glutReshapeFunc(MyReshape);
