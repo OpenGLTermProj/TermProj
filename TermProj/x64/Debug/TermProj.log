@@ -1,10 +1,10 @@
 ﻿  ModelLoadAndDraw_templete.cpp
-C:\Users\user\Documents\GitHub\TermProj\TermProj\ModelLoadAndDraw_templete.cpp(84,42): warning C4101: 'uvIndex' :참조되지 않은 지역 변수입니다.
-C:\Users\user\Documents\GitHub\TermProj\TermProj\ModelLoadAndDraw_templete.cpp(286,26): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
-C:\Users\user\Documents\GitHub\TermProj\TermProj\ModelLoadAndDraw_templete.cpp(287,25): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
-C:\Users\user\Documents\GitHub\TermProj\TermProj\ModelLoadAndDraw_templete.cpp(288,25): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
-C:\Users\user\Documents\GitHub\TermProj\TermProj\ModelLoadAndDraw_templete.cpp(289,26): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
-C:\Users\user\Documents\GitHub\TermProj\TermProj\ModelLoadAndDraw_templete.cpp(330,34): warning C4326: 'main'의 반환 형식이 'int'이어야 하는데 'void'입니다.
-C:\Users\user\Documents\GitHub\TermProj\TermProj\ModelLoadAndDraw_templete.cpp(162): warning C4715: 'LoadPly': 모든 제어 경로에서 값을 반환하지는 않습니다.
-C:\Users\user\Documents\GitHub\TermProj\TermProj\ModelLoadAndDraw_templete.cpp(90): warning C4715: 'LoadObj': 모든 제어 경로에서 값을 반환하지는 않습니다.
-  TermProj.vcxproj -> C:\Users\user\Documents\GitHub\TermProj\x64\Debug\TermProj.exe
+C:\repo\TermProj\TermProj\Include\texture.h(57,38): warning C4305: '인수': 'int'에서 'GLboolean'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\Include\texture.h(57,28): warning C4309: '인수': 상수 값이 잘립니다.
+C:\repo\TermProj\TermProj\ModelLoadAndDraw_templete.cpp(124,26): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\ModelLoadAndDraw_templete.cpp(125,25): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\ModelLoadAndDraw_templete.cpp(126,25): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\ModelLoadAndDraw_templete.cpp(127,26): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\ModelLoadAndDraw_templete.cpp(168,34): warning C4326: 'main'의 반환 형식이 'int'이어야 하는데 'void'입니다.
+C:\repo\TermProj\TermProj\Include\model.h(87): warning C4715: 'LoadModel': 모든 제어 경로에서 값을 반환하지는 않습니다.
+  TermProj.vcxproj -> C:\repo\TermProj\x64\Debug\TermProj.exe

@@ -1,9 +1,12 @@
-
+#pragma once
 #define _CRT_SECURE_NO_WARNINGS
 
-#include <GL/glut.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
+
+//
+#include <../camera.h>
+#include <../model.h>
+#include <../texture.h>
+
 #include <stdio.h>
 #include <iostream>
 
@@ -13,6 +16,8 @@
 #include <glm/gtc/matrix_transform.hpp> 
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/normal.hpp>
+
+
 
 
 float g_fDistance = -4.5f;
@@ -37,129 +42,6 @@ GLfloat light_specular[] = { 1, 1, 1, 1.0 };
 
 
 
-bool LoadObj(const char* path,
-    std::vector < glm::vec3 >& out_vertices,
-    std::vector < glm::ivec3 >& out_faces,
-    std::vector < glm::vec2 >& out_uvs,
-    std::vector < glm::vec3 >& out_normals)
-{
-    //init variables
-    out_vertices.clear();
-    out_faces.clear();
-    out_uvs.clear();
-    out_normals.clear();
-
-    FILE* file = fopen(path, "r");
-    if (file == NULL) {
-        printf("Impossible to open the file !\n");
-        return false;
-    }
-    
-
-    while (1) {
-        char lineHeader[128];
-        // read the first word of the line
-        int res = fscanf(file, "%s", lineHeader);
-        if (res == -1)
-            break;
-
-        if (strcmp(lineHeader, "v") == 0) {
-            glm::vec3 vertex;
-            fscanf(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z);
-            out_vertices.push_back(vertex);
-
-        }
-        else if (strcmp(lineHeader, "vt") == 0) {
-            glm::vec2 uv;
-            fscanf(file, "%f %f\n", &uv.x, &uv.y);
-            out_uvs.push_back(uv);
-        }
-        else if (strcmp(lineHeader, "vn") == 0) {
-            glm::vec3 normal;
-            fscanf(file, "%f %f %f\n", &normal.x, &normal.y, &normal.z);
-            out_normals.push_back(normal);
-        }
-        else if (strcmp(lineHeader, "f") == 0) {
-            std::string vertex1, vertex2, vertex3;
-            unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
-            int matches = fscanf(file, "%d//%d %d//%d %d//%d\n", &vertexIndex[0], &normalIndex[0], &vertexIndex[1], &normalIndex[1], &vertexIndex[2], &normalIndex[2]);
-            out_faces.push_back(glm::ivec3(vertexIndex[0] - 1, vertexIndex[1] - 1, vertexIndex[2] - 1));
-        }
-    }
-
-}
-
-
-
-bool LoadPly(const char* path,
-    std::vector < glm::vec3 >& out_vertices,
-    std::vector < glm::ivec3 >& out_faces,
-    std::vector < glm::vec3 >& out_normals)
-{
-    FILE* file = fopen(path, "r");
-    if (file == NULL) {
-        printf("Impossible to open the file !\n");
-        return false;
-    }
-
-    //init variables
-    out_vertices.clear();
-    out_faces.clear();
-    out_normals.clear();
-
-    int nbVertices = 0;
-    int nbFaces = 0;
-
-    while (1) {
-        char lineHeader1[128];
-        char lineHeader2[128];
-        // read the first word of the line
-        int res = fscanf(file, "%s", lineHeader1);
-        if (res == -1)
-            break;
-        if (strcmp(lineHeader1, "element") == 0) {
-            fscanf(file, "%s", lineHeader2);
-            if (strcmp(lineHeader2, "vertex") == 0) {
-                fscanf(file, "%d\n", &nbVertices);
-            }
-            else if (strcmp(lineHeader2, "face") == 0) {
-                fscanf(file, "%d\n", &nbFaces);
-            }
-        }
-        else if (strcmp(lineHeader1, "end_header") == 0) {
-            break;
-        }
-    }
-
-    for (int i = 0; i < nbVertices; i++)
-    {
-        glm::vec3 tmp;
-        GLfloat trash1, trash2;
-        fscanf(file, "%f %f %f %f %f\n", &tmp.x, &tmp.y, &tmp.z, &trash1, &trash2);
-        out_vertices.push_back(tmp);
-        out_normals.push_back(glm::vec3(0,0,0)); // clear nv
-    }
-
-    for (int i = 0; i < nbFaces; i++)
-    {
-        glm::ivec3 face;
-        unsigned int trash;
-        fscanf(file, "%d %d %d %d\n", &trash, &face.x, &face.y, &face.z);
-        out_faces.push_back(face);
-
-        auto const& p1 = out_vertices[face[0]];
-        auto const& p2 = out_vertices[face[1]];
-        auto const& p3 = out_vertices[face[2]];
-
-        auto f_normal = glm::triangleNormal(p1, p2, p3);
-        
-        for (int j = 0; j < 3; j++)
-        {
-            auto& vn = out_normals[face[j]];
-            vn = glm::normalize(vn + f_normal);
-        }
-    }
-}
 
 void MyMouse(int button, int state, int x, int y) {
     switch (button) {
@@ -225,50 +107,6 @@ void init(void) {
 }
 
 
-
-void DrawSurface(std::vector < glm::vec3 >& vectices, 
-    std::vector < glm::vec3 >& normals, 
-    std::vector < glm::ivec3 >& faces)
-{
-    glBegin(GL_TRIANGLES);
-    for (int i = 0 ;i < faces.size(); i++)
-    {
-        for (int j = 0; j < 3; j++)
-        {
-            glm::vec3 p = vertices[faces[i][j]];
-
-            if (normals.size() == vertices.size())
-            {
-                glm::vec3 n = normals[faces[i][j]];
-                glNormal3f(n[0], n[1], n[2]);
-            }
-            glVertex3f(p[0], p[1], p[2]);
-        }
-    }
-    
-    glEnd();
-}
-
-void DrawWireSurface(std::vector < glm::vec3 >& vectices,
-    std::vector < glm::ivec3 >& faces)
-{
-    glBegin(GL_LINES);
-    for (int i = 0; i < faces.size(); i++)
-    {
-        glm::vec3 p1 = vertices[faces[i][0]];
-        glm::vec3 p2 = vertices[faces[i][1]];
-        glm::vec3 p3 = vertices[faces[i][2]];
-        
-        glVertex3f(p1[0], p1[1], p1[2]);
-        glVertex3f(p2[0], p2[1], p2[2]);
-        glVertex3f(p2[0], p2[1], p2[2]);
-        glVertex3f(p3[0], p3[1], p3[2]);
-        glVertex3f(p3[0], p3[1], p3[2]);
-        glVertex3f(p1[0], p1[1], p1[2]);
-    }
-    glEnd();
-}
-
 void DrawHUD()
 {
     glMatrixMode(GL_PROJECTION);
@@ -309,7 +147,7 @@ void render(void) {
 
     //Draw here
     //DrawSurface(vertices,normals,faces);
-    DrawWireSurface(vertices, faces);
+    
 
     DrawHUD();
     glutSwapBuffers();
@@ -335,8 +173,8 @@ void main(int argc, char** argv) {
     glutCreateWindow("171413 È²ÈñÀç");
     init();
 
-    //LoadObj("../Data/bunny/bunny.obj", vertices, faces, uvs, normals);
-    LoadPly("../Data/bunny/bun_zipper_res4.ply", vertices, faces, normals);
+   //loadmodel
+    
 
     glutDisplayFunc(render);
     glutReshapeFunc(MyReshape);
