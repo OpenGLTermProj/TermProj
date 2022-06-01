@@ -113,38 +113,19 @@ void DrawHUD()
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
     glLoadIdentity();
-    gluOrtho2D(0, 1, 0, 1); // (0,0) 좌측하단 (1,1) 오른쪽 상단
+    gluOrtho2D(0.0, 1.0, 1.0, 0.0);
 
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
     glLoadIdentity();
 
     glDisable(GL_LIGHTING);
+    glColor3f(0.0, 1.0, 1.0);
     glBegin(GL_QUADS);
-    glColor3f(1.0, 1.0, 1.0);
-    glVertex2f(0.05, 0.05); // 하단 Bar
-    glVertex2f(0.95, 0.05);
-    glVertex2f(0.95, 0.15);
+    glVertex2f(0.05, 0.05);
+    glVertex2f(0.3, 0.05);
+    glVertex2f(0.3, 0.15);
     glVertex2f(0.05, 0.15);
-
-    glColor3f(1.0, 0.0, 0.0);
-    glVertex2f(0.05, 0.85); // 왼쪽 위 하트1
-    glVertex2f(0.10, 0.85);
-    glVertex2f(0.10, 0.95);
-    glVertex2f(0.05, 0.95);
-
-    glColor3f(1.0, 0.0, 0.0);
-    glVertex2f(0.125, 0.85); // 왼쪽 위 하트2
-    glVertex2f(0.175, 0.85);
-    glVertex2f(0.175, 0.95);
-    glVertex2f(0.125, 0.95);
-
-    glColor3f(1.0, 0.0, 0.0);
-    glVertex2f(0.20, 0.85); // 왼쪽 위 하트3
-    glVertex2f(0.25, 0.85);
-    glVertex2f(0.25, 0.95);
-    glVertex2f(0.2, 0.95);
-
     glEnd();
     glEnable(GL_LIGHTING);
 
@@ -153,6 +134,7 @@ void DrawHUD()
     glMatrixMode(GL_MODELVIEW);
     glPopMatrix();
 }
+
 
 void render(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -180,7 +162,7 @@ void MyReshape(int w, int h) {
     glViewport(0, 0, w, h);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(90, (GLfloat)w / (GLfloat)h, 0.1, 100.0);
+    gluPerspective(90, (GLfloat)w / (GLfloat)h, 1.0, 100.0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     gluLookAt(0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
