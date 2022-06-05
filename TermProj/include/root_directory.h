@@ -1,1 +1,1 @@
-const char * logl_root = "D:/repo/TermProj";
+const char * logl_root = "C:/repo/TermProj";
