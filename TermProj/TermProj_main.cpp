@@ -17,6 +17,8 @@
 #include <learnopengl/model.h>
 
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 
 template<typename ... Args>
 std::string string_format(const std::string& format, Args ... args);
@@ -31,7 +33,9 @@ unsigned int loadTexture(char const* path);
 
 // transition
 glm::vec3 player = glm::vec3(0, 0.182, 0);
+float pAngle = 0.0;
 float speed = 0.001;
+int selectCard = 0;
 
 // settings
 const unsigned int SCR_WIDTH = 1366;
@@ -81,6 +85,7 @@ int main()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+	srand(time(NULL)); // rand 함수 사용을 위한 SEED 값 초기화
 
 	// glfw window creation
 	// --------------------
@@ -316,7 +321,6 @@ int main()
 		// don't forget to enable shader before setting uniforms
 		tableShader.use();
 
-
 		// view/projection transformations
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.01f, 100.0f);
 		glm::mat4 view = camera.GetViewMatrix();
@@ -338,6 +342,7 @@ int main()
 
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, player);
+		model = glm::rotate(model, glm::radians(pAngle), glm::vec3(0, 1, 0));
 		model = glm::scale(model, glm::vec3(0.03f, 0.03f, 0.03f));
 
 		unsigned int modelLoc = glGetUniformLocation(cubeShader.ID, "model");
@@ -393,30 +398,37 @@ void processInput(GLFWwindow* window)
 	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
 		camera = Camera(glm::vec3(0.0f, 0.5f, -0.5f), glm::vec3(0.f, 1.f, 0.f), 90.f, -35.f);
 
+	if (glfwGetKey(window, GLFW_KEY_LEFT_ALT) == GLFW_PRESS)
+		player = glm::vec3(0, 0.182, 0);
+
 	// character move
+	float Tx = speed * cos((-pAngle - 90) * 3.141592 / 180);
+	float Tz = speed * sin((-pAngle - 90) * 3.141592 / 180);
 	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
 	{
-		player[2] += speed;
-		if (!PositionCheck())
-			player[2] -= speed;
+		player[0] += Tx;
+		player[2] += Tz;
+		if (!PositionCheck()) {
+			player[0] -= Tx;
+			player[2] -= Tz;
+		}	
 	}
 	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
 	{
-		player[2] -= speed;
-		if (!PositionCheck())
-			player[2] += speed;
+		player[0] -= Tx;
+		player[2] -= Tz;
+		if (!PositionCheck()) {
+			player[0] += Tx;
+			player[2] += Tz;
+		}
 	}
 	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
 	{
-		player[0] += speed;
-		if (!PositionCheck())
-			player[0] -= speed;
+		pAngle -= 1;
 	}
 	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
 	{
-		player[0] -= speed;
-		if (!PositionCheck())
-			player[0] += speed;
+		pAngle += 1;
 	}
 	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
 		player[1] += speed;
@@ -463,6 +475,26 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 	camera.ProcessMouseScroll(static_cast<float>(yoffset));
 }
 
+int GetCardOnPlayer(float x, float z)
+{
+	float r = pow(0.03, 2); // Card를 Select 할 범위
+	float a = 0.3, b = 0.1;
+	if (pow(x - a, 2) + pow(z - b, 2) < r) return 0;
+	a = 0.24; b = 0.02;
+	if (pow(x - a, 2) + pow(z - b, 2) < r) 	return 1;
+	a = 0.13; b = -0.1;
+	if (pow(x - a, 2) + pow(z - b, 2) < r)	return 2;
+	a = 0; b = -0.13;
+	if (pow(x - a, 2) + pow(z - b, 2) < r)	return 3;
+	a = -0.13; b = -0.1;
+	if (pow(x - a, 2) + pow(z - b, 2) < r)	return 4;
+	a = -0.24; b = 0.02;
+	if (pow(x - a, 2) + pow(z - b, 2) < r)	return 5;
+	a = -0.3, b = 0.1;
+	if (pow(x - a, 2) + pow(z - b, 2) < r)	return 6;
+	return 7;
+}
+
 /// <summary>
 /// 움직일 때 원점(0, 0)을 기준으로 캐릭터의 좌표 z, x가 a = 0.21, b = 0.37 인 타원 안에 있는 경우 true 아닌 경우 false
 /// </summary>
@@ -474,6 +506,16 @@ bool PositionCheck()
 	float len = 0;
 	float x = abs(player[0]);
 	float z = abs(player[2]);
+
+	int card = GetCardOnPlayer(player[0], player[2]);
+	if (card != selectCard)
+	{
+		if (card != 7)
+		{
+			printf("selection card change %d to %d\n", selectCard, card);
+			selectCard = card;
+		}
+	}
 
 	if (x == 0.0000)
 		if (z < a)
