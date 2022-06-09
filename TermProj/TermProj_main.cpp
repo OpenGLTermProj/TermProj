@@ -17,6 +17,8 @@
 #include <learnopengl/model.h>
 
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 
 template<typename ... Args>
 std::string string_format(const std::string& format, Args ... args);
@@ -28,8 +30,8 @@ void processInput(GLFWwindow* window);
 
 // transition
 glm::vec3 player = glm::vec3(0, 0.182, 0);
-glm::vec3 card[7] = { glm::vec3(0.32, 0.145, 0.095), glm::vec3(0.255, 0.145, -0.029), glm::vec3(0.137, 0.145, -0.11), glm::vec3(0, 0.145, -0.142),
-					  glm::vec3(-0.137, 0.145, -0.11), glm::vec3(-0.255, 0.145, -0.029), glm::vec3(-0.32, 0.145, 0.095) };
+glm::vec3 card[7] = { glm::vec3(0.32, 0.15, 0.095), glm::vec3(0.255, 0.15, -0.029), glm::vec3(0.137, 0.15, -0.11), glm::vec3(0, 0.15, -0.142),
+					  glm::vec3(-0.137, 0.15, -0.11), glm::vec3(-0.255, 0.15, -0.029), glm::vec3(-0.32, 0.15, 0.095) };
 float pAngle = 0.0;
 float cAngle[7] = { -75, -50, -25, 0, 25, 50, 75 };
 float speed = 0.001;
@@ -84,6 +86,7 @@ int main()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+	srand(time(NULL)); // rand ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ SEED ï¿½ï¿½ ï¿½Ê±ï¿½È­
 
     // glfw window creation
     // --------------------
@@ -112,6 +115,9 @@ int main()
 
     // tell stb_image.h to flip loaded texture's on the y-axis (before loading model).
     stbi_set_flip_vertically_on_load(true);
+
+	// card index set
+	joker = rand() % 7;
 
 	// card index set
 	joker = rand() % 7;
@@ -460,19 +466,11 @@ void processInput(GLFWwindow* window)
 			player[2] += Tz;
 		}
 	}
+	
 	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-		pAngle -= 1;
-	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
 		pAngle += 1;
-
-	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
-		cAngle[0] -= 1;
-	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
-		cAngle[0] += 1;
-	if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
-		cAngle[1] -= 1;
-	if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
-		cAngle[1] += 1;
+	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+		pAngle -= 1;
 
 	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
 		player[1] += speed;
@@ -521,7 +519,7 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 
 int GetCardOnPlayer(float x, float z)
 {
-	float r = pow(0.03, 2); // Card¸¦ Select ÇÒ ¹üÀ§
+	float r = pow(0.03, 2); // Cardï¿½ï¿½ Select ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	float a = 0.3, b = 0.1;
 	if (pow(x - a, 2) + pow(z - b, 2) < r) return 0;
 	a = 0.24; b = 0.02;
@@ -540,7 +538,7 @@ int GetCardOnPlayer(float x, float z)
 }
 
 /// <summary>
-/// ¿òÁ÷ÀÏ ¶§ ¿øÁ¡(0, 0)À» ±âÁØÀ¸·Î Ä³¸¯ÅÍÀÇ ÁÂÇ¥ z, x°¡ a = 0.21, b = 0.37 ÀÎ Å¸¿ø ¾È¿¡ ÀÖ´Â °æ¿ì true ¾Æ´Ñ °æ¿ì false
+/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(0, 0)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ z, xï¿½ï¿½ a = 0.21, b = 0.37 ï¿½ï¿½ Å¸ï¿½ï¿½ ï¿½È¿ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ true ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½ false
 /// </summary>
 /// <returns></returns>
 bool PositionCheck()
