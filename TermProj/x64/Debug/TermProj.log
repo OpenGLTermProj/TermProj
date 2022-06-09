@@ -1,27 +1,27 @@
 ﻿  TermProj_main.cpp
-C:\repo\TermProj\TermProj\TermProj_main.cpp(37,20): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(88,12): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(405,11): warning C4244: '초기화 중': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(406,11): warning C4244: '초기화 중': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(480,10): warning C4244: '초기화 중': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(481,15): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(481,24): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(483,10): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(483,20): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(485,10): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(485,20): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(487,18): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(489,11): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(489,21): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(491,11): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(491,21): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(493,10): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(493,19): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(505,16): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(505,26): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(531,39): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(554,23): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(555,22): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(556,22): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(557,23): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\TermProj_main.cpp(40,20): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\TermProj_main.cpp(92,12): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\repo\TermProj\TermProj\TermProj_main.cpp(449,11): warning C4244: '초기화 중': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\repo\TermProj\TermProj\TermProj_main.cpp(450,11): warning C4244: '초기화 중': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\repo\TermProj\TermProj\TermProj_main.cpp(530,10): warning C4244: '초기화 중': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\repo\TermProj\TermProj\TermProj_main.cpp(531,15): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\TermProj_main.cpp(531,24): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\TermProj_main.cpp(533,10): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\TermProj_main.cpp(533,20): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\TermProj_main.cpp(535,10): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\TermProj_main.cpp(535,20): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\TermProj_main.cpp(537,18): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\TermProj_main.cpp(539,11): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\TermProj_main.cpp(539,21): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\TermProj_main.cpp(541,11): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\TermProj_main.cpp(541,21): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\TermProj_main.cpp(543,10): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\TermProj_main.cpp(543,19): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\TermProj_main.cpp(555,16): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\TermProj_main.cpp(555,26): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\TermProj_main.cpp(581,39): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\repo\TermProj\TermProj\TermProj_main.cpp(604,23): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\TermProj_main.cpp(605,22): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\TermProj_main.cpp(606,22): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\TermProj_main.cpp(607,23): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
   TermProj.vcxproj -> C:\repo\TermProj\x64\Debug\TermProj.exe
