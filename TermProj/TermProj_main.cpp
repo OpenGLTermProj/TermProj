@@ -32,7 +32,7 @@ void processInput(GLFWwindow* window);
 unsigned int loadTexture(char const* path);
 
 // transition
-glm::vec3 player = glm::vec3(0, 0.15, -0.141);
+glm::vec3 player = glm::vec3(0, 0.182, 0);
 glm::vec3 card[7] = { glm::vec3(0.32, 0.15, 0.095), glm::vec3(0.255, 0.15, -0.029), glm::vec3(0.137, 0.15, -0.11), glm::vec3(0, 0.15, -0.142),
 					  glm::vec3(-0.137, 0.15, -0.11), glm::vec3(-0.255, 0.15, -0.029), glm::vec3(-0.32, 0.15, 0.095) };
 float pAngle = 0.0;
@@ -385,7 +385,7 @@ int main()
 		glBindTexture(GL_TEXTURE_2D, cubeTexture);
 
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0, 0.182, 0));
+		model = glm::translate(model, player);
 		model = glm::rotate(model, glm::radians(pAngle), glm::vec3(0, 1, 0));
 		model = glm::scale(model, glm::vec3(0.03f, 0.03f, 0.03f));
 
@@ -452,33 +452,24 @@ void processInput(GLFWwindow* window)
 	{
 		player[0] += Tx;
 		player[2] += Tz;
-		/*if (!PositionCheck()) {
+		if (!PositionCheck()) {
 			player[0] -= Tx;
 			player[2] -= Tz;
-		}*/	
+		}*
 	}
 	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
 	{
 		player[0] -= Tx;
 		player[2] -= Tz;
-		/*if (!PositionCheck()) {
+		if (!PositionCheck()) {
 			player[0] += Tx;
 			player[2] += Tz;
-		}*/
+		}
 	}
 	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-		pAngle -= 1;
-	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
 		pAngle += 1;
-
-	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
-		cAngle[0] -= 1;
-	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
-		cAngle[0] += 1;
-	if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
-		cAngle[1] -= 1;
-	if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
-		cAngle[1] += 1;
+	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+		pAngle -= 1;
 
 	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
 		player[1] += speed;
