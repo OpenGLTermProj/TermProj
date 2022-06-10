@@ -37,8 +37,8 @@ float hAngle[3] = { 0, };
 
 
 // settings
-const unsigned int SCR_WIDTH = 1366;
-const unsigned int SCR_HEIGHT = 768;
+const unsigned int SCR_WIDTH = 1980;
+const unsigned int SCR_HEIGHT = 1080;
 
 // camera
 Camera camera(glm::vec3(0.0f, 0.5f, -0.5f), glm::vec3(0.f, 1.f, 0.f), 90.f, -35.f);
@@ -55,7 +55,29 @@ unsigned int VAO, VBO;
 unsigned int cubeVAO, cubeVBO;
 unsigned int cubeTexture;
 
-State gameState = State::InGame;
+State gameState = State::Lobby;
+
+float backgroundVertices[] = {
+	// positions          // colors           // texture coords
+	 1.0f,  1.0f, 0.1f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+	 1.0f, -1.0f, 0.1f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+	-1.0f, -1.0f, 0.1f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+	-1.0f,  1.0f, 0.1f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
+};
+
+
+unsigned int boxIndices[] = {
+	0, 1, 3, // first triangle
+	1, 2, 3  // second triangle
+};
+
+float startButtonVertices[] = {
+	// positions          // colors           // texture coords
+	 -0.5f,  -0.5f, 0.1f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+	 -0.5f, -0.7f, 0.1f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+	-0.7f, -0.7f, 0.09f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+	-0.7f,  -0.5f, 0.09f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
+};
 
 extern float cubeVertices[] = {
 	// positions          // texture Coords

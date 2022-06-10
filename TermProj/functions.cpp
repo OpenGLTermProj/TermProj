@@ -363,7 +363,7 @@ int initText() {
 	}
 
 	// find path to font
-	std::string font_name = FileSystem::getPath("resources/fonts/Antonio-Bold.ttf");
+	std::string font_name = FileSystem::getPath("resources/fonts/joker_final.ttf");
 	if (font_name.empty())
 	{
 		std::cout << "ERROR::FREETYPE: Failed to load font_name" << std::endl;

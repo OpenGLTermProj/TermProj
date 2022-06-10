@@ -20,6 +20,7 @@ extern Shader tableShader;
 extern Shader jCardShader;
 extern Shader eCardShader;
 extern Shader cubeShader;
+extern Shader lobbyBackgroundShader;
 
 extern Model table;
 extern Model eCard;
@@ -74,6 +75,8 @@ extern unsigned int VAO, VBO;
 // set up vertex data (and buffer(s)) and configure vertex attributes
 // ------------------------------------------------------------------
 extern float cubeVertices[180];
+extern float backgroundVertices[32];
+extern unsigned int boxIndices[6];
 
 #endif
 
