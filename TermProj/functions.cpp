@@ -223,20 +223,28 @@ void processInput(GLFWwindow* window)
 	float Tz = speed * sin((-pAngle - 90) * 3.141592 / 180);
 	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
 	{
-		player[0] += Tx;
-		player[2] += Tz;
+		player.x += Tx;
+		player.z += Tz;
+		camera.Position.x  += Tx;
+		camera.Position.z += Tz;
 		if (!PositionCheck()) {
-			player[0] -= Tx;
-			player[2] -= Tz;
+			player.x -= Tx;
+			player.z -= Tz;
+			camera.Position.x -= Tx;
+			camera.Position.z -= Tz;
 		}
 	}
 	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
 	{
-		player[0] -= Tx;
-		player[2] -= Tz;
+		player.x -= Tx;
+		player.z -= Tz;
+		camera.Position.x -= Tx;
+		camera.Position.z -= Tz;
 		if (!PositionCheck()) {
-			player[0] += Tx;
-			player[2] += Tz;
+			player.x += Tx;
+			player.z += Tz;
+			camera.Position.x += Tx;
+			camera.Position.z += Tz;
 		}
 	}
 
