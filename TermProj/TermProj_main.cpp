@@ -3,11 +3,17 @@
 
 #include "functions.h"
 
-int main()
+GLFWwindow* window;
+void robby();
+void inGame();
+
+int main(int argc, char** argv)
 {
+
     // glfw: initialize and configure
     // ------------------------------
     glfwInit();
+
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -15,7 +21,9 @@ int main()
 	srand(time(NULL)); // rand �Լ� ����� ���� SEED �� �ʱ�ȭ
     // glfw window creation
     // --------------------
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "TermProj", NULL, NULL);
+
+	
+    window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "TermProj", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -56,21 +64,23 @@ int main()
 
 	// build and compile shaders
 // -------------------------
-	static Shader textShader("shader/text.vs", "shader/text.fs");
-	static Shader tableShader("shader/table.vs", "shader/table.fs");
-	static Shader jCardShader("shader/jokercard.vs", "shader/jokercard.fs");
-	static Shader eCardShader("shader/emptycard.vs", "shader/emptycard.fs");
-	static Shader cubeShader("shader/cube.vs", "shader/cube.fs");
+	Model jCard(FileSystem::getPath("Data/card/jokercard.obj"));
+	Model eCard(FileSystem::getPath("Data/card/emptycard.obj"));
+	Model table(FileSystem::getPath("Data/table/table_final.obj"));
+
+	Shader textShader("shader/text.vs", "shader/text.fs");
+	Shader tableShader("shader/table.vs", "shader/table.fs");
+	Shader jCardShader("shader/jokercard.vs", "shader/jokercard.fs");
+	Shader eCardShader("shader/emptycard.vs", "shader/emptycard.fs");
+	Shader cubeShader("shader/cube.vs", "shader/cube.fs");
 
 	// load textures
 // -------------
 	unsigned int cubeTexture = loadTexture(FileSystem::getPath("resources/textures/container.jpg").c_str());
 
+
 	// load models
 	// -----------
-	Model table(FileSystem::getPath("Data/table/table_final.obj"));
-	Model jCard(FileSystem::getPath("Data/card/jokercard.obj"));
-	Model eCard(FileSystem::getPath("Data/card/emptycard.obj"));
 
 
 	glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(SCR_WIDTH), 0.0f, static_cast<float>(SCR_HEIGHT));
@@ -78,7 +88,7 @@ int main()
 	glUniformMatrix4fv(glGetUniformLocation(textShader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
 	// cube VAO
-	unsigned int cubeVAO, cubeVBO;
+	
 	glGenVertexArrays(1, &cubeVAO);
 	glGenBuffers(1, &cubeVBO);
 	glBindVertexArray(cubeVAO);
@@ -97,6 +107,7 @@ int main()
 	// -----------
 	while (!glfwWindowShouldClose(window))
 	{
+
 		// per-frame time logic
 		// --------------------
 		float currentFrame = static_cast<float>(glfwGetTime());
@@ -112,87 +123,119 @@ int main()
 		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		// don't forget to enable shader before setting uniforms
-		tableShader.use();
 
-		// view/projection transformations
-		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.01f, 100.0f);
-		glm::mat4 view = camera.GetViewMatrix();
-		tableShader.setMat4("projection", projection);
-		tableShader.setMat4("view", view);
-
-		// render the loaded model
-		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
-		tableShader.setMat4("model", model);
-		table.Draw(tableShader);
-
-		// render the joker card
-		jCardShader.use();
-		jCardShader.setMat4("projection", projection);
-		jCardShader.setMat4("view", view);
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, card[jokerIndex]); // translate it down so it's at the center of the scene
-		model = glm::rotate(model, glm::radians(cAngle[jokerIndex]), glm::vec3(0, 1, 0));
-		model = glm::rotate(model, glm::radians(-90.f), glm::vec3(1, 0, 0));
-		model = glm::scale(model, glm::vec3(0.025f, 0.025f, 0.025f));	// it's a bit too big for our scene, so scale it down
-		jCardShader.setMat4("model", model);
-		jCard.Draw(jCardShader);
-
-		// render the empty card
-		eCardShader.use();
-		eCardShader.setMat4("projection", projection);
-		eCardShader.setMat4("view", view);
-		for (int i = 0; i < 7; i++)
+		switch (gameState)
 		{
-			if (i == jokerIndex)
-				continue;
+		case State::Lobby:
+		{
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
+
+			string debug1 = string_format(" Mouse X : %f  Mouse Y : %f", lastX, lastY);
+			RenderText(textShader, debug1, 25.0f, 25.0f, 0.3f, glm::vec3(0.5, 0.8f, 0.2f));
+
+			break;
+		}
+		case State::InGame:
+		{
+			// don't forget to enable shader before setting uniforms
+			tableShader.use();
+
+			// view/projection transformations
+			glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.01f, 100.0f);
+			glm::mat4 view = camera.GetViewMatrix();
+			tableShader.setMat4("projection", projection);
+			tableShader.setMat4("view", view);
+
+			// render the loaded model
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+			model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
+			tableShader.setMat4("model", model);
+			table.Draw(tableShader);
+
+			// render the joker card
+			jCardShader.use();
+			jCardShader.setMat4("projection", projection);
+			jCardShader.setMat4("view", view);
 			model = glm::mat4(1.0f);
-			model = glm::translate(model, card[i]); // translate it down so it's at the center of the scene
-			model = glm::rotate(model, glm::radians(cAngle[i]), glm::vec3(0, 1, 0));
+			model = glm::translate(model, card[jokerIndex]); // translate it down so it's at the center of the scene
+			model = glm::rotate(model, glm::radians(cAngle[jokerIndex]), glm::vec3(0, 1, 0));
 			model = glm::rotate(model, glm::radians(-90.f), glm::vec3(1, 0, 0));
 			model = glm::scale(model, glm::vec3(0.025f, 0.025f, 0.025f));	// it's a bit too big for our scene, so scale it down
-			eCardShader.setMat4("model", model);
-			eCard.Draw(eCardShader);
+			jCardShader.setMat4("model", model);
+			jCard.Draw(jCardShader);
+
+			// render the empty card
+			eCardShader.use();
+			eCardShader.setMat4("projection", projection);
+			eCardShader.setMat4("view", view);
+			for (int i = 0; i < 7; i++)
+			{
+				if (i == jokerIndex)
+					continue;
+
+				model = glm::mat4(1.0f);
+				model = glm::translate(model, card[i]); // translate it down so it's at the center of the scene
+				model = glm::rotate(model, glm::radians(cAngle[i]), glm::vec3(0, 1, 0));
+				model = glm::rotate(model, glm::radians(-90.f), glm::vec3(1, 0, 0));
+				model = glm::scale(model, glm::vec3(0.025f, 0.025f, 0.025f));	// it's a bit too big for our scene, so scale it down
+				eCardShader.setMat4("model", model);
+				eCard.Draw(eCardShader);
+			}
+
+			// cubes
+			cubeShader.use();
+
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, cubeTexture);
+
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, player);
+			model = glm::rotate(model, glm::radians(pAngle), glm::vec3(0, 1, 0));
+			model = glm::scale(model, glm::vec3(0.03f, 0.03f, 0.03f));
+
+			unsigned int modelLoc = glGetUniformLocation(cubeShader.ID, "model");
+			unsigned int viewLoc = glGetUniformLocation(cubeShader.ID, "view");
+			cubeShader.setMat4("projection", projection);
+			cubeShader.setMat4("view", view);
+			cubeShader.setMat4("model", model);
+
+			glBindVertexArray(cubeVAO);
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+			glBindVertexArray(0);
+
+
+			string debug1 = string_format("Front : %f, %f, %f | Position : %f, %f, %f | Yaw : %f | Pitch : %f", camera.Front[0], camera.Front[1], camera.Front[2],
+				camera.Position[0], camera.Position[1], camera.Position[2], camera.Yaw, camera.Pitch);
+			string debug2 = string_format("Model Position | %f, %f, %f | Angle %f", player[0], player[1], player[2], pAngle);
+
+			RenderText(textShader, debug1, 25.0f, 25.0f, 0.3f, glm::vec3(0.5, 0.8f, 0.2f));
+			RenderText(textShader, debug2, 25.0f, 50.0f, 0.3f, glm::vec3(0.5, 0.8f, 0.2f));
+			RenderText(textShader, to_string(currentFrame), 25.0f, 75.0f, 0.3f, glm::vec3(0.5, 0.8f, 0.2f));
+			break;
 		}
-
-		// cubes
-		cubeShader.use();
-
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, cubeTexture);
-
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, player);
-		model = glm::rotate(model, glm::radians(pAngle), glm::vec3(0, 1, 0));
-		model = glm::scale(model, glm::vec3(0.03f, 0.03f, 0.03f));
-
-		unsigned int modelLoc = glGetUniformLocation(cubeShader.ID, "model");
-		unsigned int viewLoc = glGetUniformLocation(cubeShader.ID, "view");
-		cubeShader.setMat4("projection", projection);
-		cubeShader.setMat4("view", view);
-		cubeShader.setMat4("model", model);
-
-		glBindVertexArray(cubeVAO);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-		glBindVertexArray(0);
+		case State::End:
+		{
+			break;
+		}
+		default:
+		{
+			break;
+		}
+		}
+		
 
 
-		string debug1 = string_format("Front : %f, %f, %f | Position : %f, %f, %f | Yaw : %f | Pitch : %f", camera.Front[0], camera.Front[1], camera.Front[2],
-			camera.Position[0], camera.Position[1], camera.Position[2], camera.Yaw, camera.Pitch);
-		string debug2 = string_format("Model Position | %f, %f, %f | Angle %f", player[0], player[1], player[2], pAngle);
-
-		RenderText(textShader, debug1, 25.0f, 25.0f, 0.3f, glm::vec3(0.5, 0.8f, 0.2f));
-		RenderText(textShader, debug2, 25.0f, 50.0f, 0.3f, glm::vec3(0.5, 0.8f, 0.2f));
-		RenderText(textShader, to_string(currentFrame), 25.0f, 75.0f, 0.3f, glm::vec3(0.5, 0.8f, 0.2f));
+		
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+
 	}
+
 
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
@@ -214,8 +257,4 @@ std::string string_format(const std::string& format, Args ... args)
 	return std::string(buf.get(), buf.get() + size - 1); // We don't want the '\0' inside
 }
 #pragma endregion
-
-
-
-
 

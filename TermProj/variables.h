@@ -1,15 +1,29 @@
 #pragma once
+
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
 #include <learnopengl/camera.h>
 #include <learnopengl/shader.h>
+#include <learnopengl/model.h>
 #include <iostream>
 #include <map>
 
 #ifndef VARIABLES_H
 #define VARIABLES_H
 
+extern unsigned int cubeVAO, cubeVBO;
+
+extern Shader textShader;
+extern Shader textShader;
+extern Shader tableShader;
+extern Shader jCardShader;
+extern Shader eCardShader;
+extern Shader cubeShader;
+
+extern Model table;
+extern Model eCard;
+extern Model jCard;
 
 // transition
 extern glm::vec3 player;
@@ -19,6 +33,8 @@ extern float cAngle[7];
 extern float speed ;
 extern int jokerIndex;
 extern int selectCard ;
+
+extern unsigned int cubeTexture;
 
 // settings
 extern const unsigned int SCR_WIDTH ;
@@ -52,3 +68,13 @@ extern unsigned int VAO, VBO;
 extern float cubeVertices[180];
 
 #endif
+
+extern enum State
+{
+	Lobby,
+	InGame,
+	End
+
+};
+
+extern State gameState;

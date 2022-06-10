@@ -5,7 +5,10 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
+
 #include <glad/glad.h>
+#include <sprite_renderer.h>
+#include <shader.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
 
@@ -24,6 +27,8 @@
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
+
+
 
 #include "variables.h"
 

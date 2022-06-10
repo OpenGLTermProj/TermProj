@@ -1,9 +1,21 @@
 #pragma once
+#define _CRT_SECURE_NO_WARNINGS
 
 #include "variables.h"
+#include <learnopengl/filesystem.h>
 #include "root_directory.h"
 
 const char* logl_root = "C:/repo/TermProj";
+
+Model jCard;
+Model eCard;
+Model table;
+
+Shader textShader;
+Shader tableShader;
+Shader jCardShader;
+Shader eCardShader;
+Shader cubeShader;
 
 // transition
 glm::vec3 player = glm::vec3(0, 0.182, 0);
@@ -31,6 +43,10 @@ float lastFrame = 0.0f;
 
  std::map<GLchar, Character> Characters;
 unsigned int VAO, VBO;
+unsigned int cubeVAO, cubeVBO;
+unsigned int cubeTexture;
+
+State gameState = State::Lobby;
 
 extern float cubeVertices[] = {
 	// positions          // texture Coords
