@@ -12,29 +12,28 @@
 
 
 // transition
-
 extern glm::vec3 player;
 extern glm::vec3 card[7];
 extern float pAngle  ;
 extern float cAngle[7];
- extern float speed ;
- extern int jokerIndex;
- extern int selectCard ;
+extern float speed ;
+extern int jokerIndex;
+extern int selectCard ;
 
 // settings
- extern const unsigned int SCR_WIDTH ;
- extern const unsigned int SCR_HEIGHT;
+extern const unsigned int SCR_WIDTH ;
+extern const unsigned int SCR_HEIGHT;
 
 // camera
- extern Camera camera;
- extern float lastX;
- extern float lastY;
- extern bool firstMouse;
+extern Camera camera;
+extern float lastX;
+extern float lastY;
+extern bool firstMouse;
 
 // timing
- extern float deltaTime;
- extern float lastFrame;
-
+extern float currentFrame;
+extern float deltaTime;
+extern float lastFrame;
 
 #pragma region Text
 /// Holds all state information relevant to a character as loaded using FreeType

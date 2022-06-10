@@ -130,7 +130,6 @@ int main()
 
 		// render the joker card
 		jCardShader.use();
-
 		jCardShader.setMat4("projection", projection);
 		jCardShader.setMat4("view", view);
 		model = glm::mat4(1.0f);
@@ -143,7 +142,6 @@ int main()
 
 		// render the empty card
 		eCardShader.use();
-
 		eCardShader.setMat4("projection", projection);
 		eCardShader.setMat4("view", view);
 		for (int i = 0; i < 7; i++)
@@ -182,13 +180,13 @@ int main()
 		glBindVertexArray(0);
 
 
-
 		string debug1 = string_format("Front : %f, %f, %f | Position : %f, %f, %f | Yaw : %f | Pitch : %f", camera.Front[0], camera.Front[1], camera.Front[2],
 			camera.Position[0], camera.Position[1], camera.Position[2], camera.Yaw, camera.Pitch);
 		string debug2 = string_format("Model Position | %f, %f, %f | Angle %f", player[0], player[1], player[2], pAngle);
 
 		RenderText(textShader, debug1, 25.0f, 25.0f, 0.3f, glm::vec3(0.5, 0.8f, 0.2f));
 		RenderText(textShader, debug2, 25.0f, 50.0f, 0.3f, glm::vec3(0.5, 0.8f, 0.2f));
+		RenderText(textShader, to_string(currentFrame), 25.0f, 75.0f, 0.3f, glm::vec3(0.5, 0.8f, 0.2f));
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
