@@ -53,6 +53,6 @@ template<typename ... Args>
 extern std::string string_format(const std::string& format, Args ... args);
 #pragma endregion
 
-
+extern int initText();
 
 #endif // !FUNCTIONS_H
