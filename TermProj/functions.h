@@ -32,7 +32,7 @@ extern void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 extern void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 extern void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 extern void processInput(GLFWwindow* window);
-extern void DrawHUD();
+
 extern unsigned int loadTexture(char const* path);
 extern bool PositionCheck();
 
@@ -54,5 +54,9 @@ extern std::string string_format(const std::string& format, Args ... args);
 #pragma endregion
 
 extern int initText();
+
+extern void renderUI();
+
+
 
 #endif // !FUNCTIONS_H

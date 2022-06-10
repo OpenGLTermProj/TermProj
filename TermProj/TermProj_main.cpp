@@ -32,17 +32,17 @@ int main()
 
     // glad: load all OpenGL function pointers
     // ---------------------------------------
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        std::cout << "Failed to initialize GLAD" << std::endl;
-        return -1;
-    }
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	{
+		std::cout << "Failed to initialize GLAD" << std::endl;
+		return -1;
+	}
 
     // tell stb_image.h to flip loaded texture's on the y-axis (before loading model).
     stbi_set_flip_vertically_on_load(true);
 
 	// card index set
-	joker = rand() % 7;
+	jokerIndex = rand() % 7;
 
 	// configure global opengl state
 	// -----------------------------
@@ -52,15 +52,19 @@ int main()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	//
+	initText();
 
 	// build and compile shaders
 // -------------------------
-	Shader textShader("shader/text.vs", "shader/text.fs");
-	Shader tableShader("shader/table.vs", "shader/table.fs");
-	Shader jCardShader("shader/jokercard.vs", "shader/jokercard.fs");
-	Shader eCardShader("shader/emptycard.vs", "shader/emptycard.fs");
-	Shader cubeShader("shader/cube.vs", "shader/cube.fs");
+	static Shader textShader("shader/text.vs", "shader/text.fs");
+	static Shader tableShader("shader/table.vs", "shader/table.fs");
+	static Shader jCardShader("shader/jokercard.vs", "shader/jokercard.fs");
+	static Shader eCardShader("shader/emptycard.vs", "shader/emptycard.fs");
+	static Shader cubeShader("shader/cube.vs", "shader/cube.fs");
 
+	// load textures
+// -------------
+	unsigned int cubeTexture = loadTexture(FileSystem::getPath("resources/textures/container.jpg").c_str());
 
 	// load models
 	// -----------
@@ -86,16 +90,8 @@ int main()
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
-
-	// load textures
-	// -------------
-	unsigned int cubeTexture = loadTexture(FileSystem::getPath("resources/textures/container.jpg").c_str());
-
 	// draw in wireframe
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-	initText();
-
 
 	// render loop
 	// -----------
@@ -138,8 +134,8 @@ int main()
 		jCardShader.setMat4("projection", projection);
 		jCardShader.setMat4("view", view);
 		model = glm::mat4(1.0f);
-		model = glm::translate(model, card[joker]); // translate it down so it's at the center of the scene
-		model = glm::rotate(model, glm::radians(cAngle[joker]), glm::vec3(0, 1, 0));
+		model = glm::translate(model, card[jokerIndex]); // translate it down so it's at the center of the scene
+		model = glm::rotate(model, glm::radians(cAngle[jokerIndex]), glm::vec3(0, 1, 0));
 		model = glm::rotate(model, glm::radians(-90.f), glm::vec3(1, 0, 0));
 		model = glm::scale(model, glm::vec3(0.025f, 0.025f, 0.025f));	// it's a bit too big for our scene, so scale it down
 		jCardShader.setMat4("model", model);
@@ -152,7 +148,7 @@ int main()
 		eCardShader.setMat4("view", view);
 		for (int i = 0; i < 7; i++)
 		{
-			if (i == joker)
+			if (i == jokerIndex)
 				continue;
 
 			model = glm::mat4(1.0f);
@@ -185,20 +181,20 @@ int main()
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 		glBindVertexArray(0);
 
+
+
 		string debug1 = string_format("Front : %f, %f, %f | Position : %f, %f, %f | Yaw : %f | Pitch : %f", camera.Front[0], camera.Front[1], camera.Front[2],
 			camera.Position[0], camera.Position[1], camera.Position[2], camera.Yaw, camera.Pitch);
 		string debug2 = string_format("Model Position | %f, %f, %f | Angle %f", player[0], player[1], player[2], pAngle);
 
 		RenderText(textShader, debug1, 25.0f, 25.0f, 0.3f, glm::vec3(0.5, 0.8f, 0.2f));
 		RenderText(textShader, debug2, 25.0f, 50.0f, 0.3f, glm::vec3(0.5, 0.8f, 0.2f));
-		DrawHUD();
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
-
 
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
@@ -220,4 +216,8 @@ std::string string_format(const std::string& format, Args ... args)
 	return std::string(buf.get(), buf.get() + size - 1); // We don't want the '\0' inside
 }
 #pragma endregion
+
+
+
+
 

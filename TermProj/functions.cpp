@@ -104,32 +104,6 @@ bool PositionCheck()
 
 }
 
-void DrawHUD() // Shader& shader, std::string text, float x, float y, float scale, glm::vec3 color
-{
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix();
-	glLoadIdentity();
-	//gluOrtho2D(0.0, 1.0, 1.0, 0.0);
-
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glLoadIdentity();
-
-	glDisable(GL_LIGHTING);
-	glColor3f(0.0, 1.0, 1.0);
-	glBegin(GL_QUADS);
-	glVertex2f(0.05, 0.05);
-	glVertex2f(0.3, 0.05);
-	glVertex2f(0.3, 0.15);
-	glVertex2f(0.05, 0.15);
-	glEnd();
-	glEnable(GL_LIGHTING);
-
-	glMatrixMode(GL_PROJECTION);
-	glPopMatrix();
-	glMatrixMode(GL_MODELVIEW);
-	glPopMatrix();
-}
 
 // utility function for loading a 2D texture from file
 // ---------------------------------------------------
@@ -370,3 +344,23 @@ int initText() {
 
 
 }
+
+void renderUI()
+{
+	 Shader textShader("shader/text.vs", "shader/text.fs");
+
+
+}
+
+#pragma region Text
+template<typename ... Args>
+std::string string_format(const std::string& format, Args ... args)
+{
+	size_t size = snprintf(nullptr, 0, format.c_str(), args ...) + 1; // Extra space for '\0'
+	if (size <= 0) { throw std::runtime_error("Error during formatting."); }
+	std::unique_ptr<char[]> buf(new char[size]);
+	snprintf(buf.get(), size, format.c_str(), args ...);
+	return std::string(buf.get(), buf.get() + size - 1); // We don't want the '\0' inside
+}
+#pragma endregion
+

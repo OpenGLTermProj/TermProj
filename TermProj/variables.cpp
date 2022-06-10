@@ -12,7 +12,7 @@ glm::vec3 card[7] = { glm::vec3(0.32, 0.15, 0.095), glm::vec3(0.255, 0.15, -0.02
 float pAngle = 0.0;
 float cAngle[7] = { -75, -50, -25, 0, 25, 50, 75 };
 float speed = 0.001;
-int joker = 0;
+int jokerIndex = 0;
 int selectCard = 0;
 
 // settings

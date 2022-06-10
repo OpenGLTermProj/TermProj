@@ -3,21 +3,22 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include <learnopengl/camera.h>
+#include <learnopengl/shader.h>
 #include <iostream>
 #include <map>
 
 #ifndef VARIABLES_H
 #define VARIABLES_H
 
-// transition
 
+// transition
 
 extern glm::vec3 player;
 extern glm::vec3 card[7];
 extern float pAngle  ;
 extern float cAngle[7];
  extern float speed ;
- extern int joker;
+ extern int jokerIndex;
  extern int selectCard ;
 
 // settings
