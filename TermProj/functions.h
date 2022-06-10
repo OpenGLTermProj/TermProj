@@ -7,8 +7,7 @@
 
 
 #include <glad/glad.h>
-#include <sprite_renderer.h>
-#include <shader.h>
+
 #include <GLFW/glfw3.h>
 #include <iostream>
 

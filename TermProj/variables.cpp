@@ -55,7 +55,7 @@ unsigned int VAO, VBO;
 unsigned int cubeVAO, cubeVBO;
 unsigned int cubeTexture;
 
-State gameState = State::Lobby;
+State gameState = State::InGame;
 
 extern float cubeVertices[] = {
 	// positions          // texture Coords

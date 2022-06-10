@@ -179,13 +179,13 @@ int main(int argc, char** argv)
 			tableShader.use();
 
 			// view/projection transformations
-			glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.01f, 100.0f);
-			glm::mat4 view = camera.GetViewMatrix();
+			projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.01f, 100.0f);
+			view = camera.GetViewMatrix();
 			tableShader.setMat4("projection", projection);
 			tableShader.setMat4("view", view);
 
 			// render the loaded model
-			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::mat4(1.0f);
 			model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
 			model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
 			tableShader.setMat4("model", model);
@@ -207,68 +207,69 @@ int main(int argc, char** argv)
 			eCardShader.use();
 			eCardShader.setMat4("projection", projection);
 			eCardShader.setMat4("view", view);
-		for (int i = 0; i < 7; i++)
-		{
-			if (selected[i] == 0)
+			for (int i = 0; i < 7; i++)
 			{
-				card[i].y = 0.145;
-				model = DrawCard(i, 0, rotateAngleX[i]);	// it's a bit too big for our scene, so scale it down
-			}
-			else if (selected[i] == 2)
-			{
-				rotateAngleX[i] = -90.f;
-				rotateAngleY[i] = 180.f;
-				rotateAngleZ[i] = -cAngle[i];
-				card[i].y = 0.195;
-				model = DrawCard(i, 5, rotateAngleY[i]);
-			}
-			else if(selected[i] == 1)
-			{
-				if (i == selectCard)
+				if (selected[i] == 0)
 				{
-					if (rotateAngleY[i] < 90.f)
+					card[i].y = 0.145;
+					model = DrawCard(i, 0, rotateAngleX[i]);	// it's a bit too big for our scene, so scale it down
+				}
+				else if (selected[i] == 2)
+				{
+					rotateAngleX[i] = -90.f;
+					rotateAngleY[i] = 180.f;
+					rotateAngleZ[i] = -cAngle[i];
+					card[i].y = 0.195;
+					model = DrawCard(i, 5, rotateAngleY[i]);
+				}
+				else if (selected[i] == 1)
+				{
+					if (i == selectCard)
 					{
-						model = DrawCard(i, 3, rotateAngleY[i]);
-					}
-					else if (rotateAngleY[i] > 180.f)
-					{
-						selected[i] = 2;
-						rotateAngleX[i] = -90.f;
-						rotateAngleY[i] = 180.f;
-						rotateAngleZ[i] = -cAngle[i];
-						card[i].y = 0.195;
-						model = DrawCard(i, 5, rotateAngleY[i]);
+						if (rotateAngleY[i] < 90.f)
+						{
+							model = DrawCard(i, 3, rotateAngleY[i]);
+						}
+						else if (rotateAngleY[i] > 180.f)
+						{
+							selected[i] = 2;
+							rotateAngleX[i] = -90.f;
+							rotateAngleY[i] = 180.f;
+							rotateAngleZ[i] = -cAngle[i];
+							card[i].y = 0.195;
+							model = DrawCard(i, 5, rotateAngleY[i]);
+						}
+						else
+						{
+							model = DrawCard(i, 4, rotateAngleY[i]);
+						}
 					}
 					else
 					{
-						model = DrawCard(i, 4, rotateAngleY[i]);
+						if (rotateAngleX[i] < 90.f)
+						{
+							model = DrawCard(i, 1, rotateAngleX[i]);
+						}
+						else if (rotateAngleX[i] > 270.f)
+						{
+							selected[i] = 0;
+							rotateAngleX[i] = -90.f;
+							card[i].y = 0.145;
+							model = DrawCard(i, 0, rotateAngleX[i]);
+						}
+						else
+						{
+							model = DrawCard(i, 2, rotateAngleX[i]);
+						}
 					}
 				}
-				else
-				{ 
-					if (rotateAngleX[i] < 90.f)
-					{
-						model = DrawCard(i, 1, rotateAngleX[i]);
-					}
-					else if (rotateAngleX[i] > 270.f)
-					{
-						selected[i] = 0;
-						rotateAngleX[i] = -90.f;
-						card[i].y = 0.145;
-						model = DrawCard(i, 0, rotateAngleX[i]);
-					}
-					else
-					{
-						model = DrawCard(i, 2, rotateAngleX[i]);
-					}
-				}
-			}
 
-			lightingShader.setMat4("model", model);
-			if (i == joker)
-				jCard.Draw(lightingShader);
-			else
-				eCard.Draw(lightingShader);
+				lightingShader.setMat4("model", model);
+				if (i == jokerIndex)
+					jCard.Draw(lightingShader);
+				else
+					eCard.Draw(lightingShader);
+			}
 			// cubes
 			cubeShader.use();
 
