@@ -18,6 +18,15 @@
     <ClCompile Include="TermProj_main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="functions.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="variables.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="include\learnopengl\model.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -25,6 +34,12 @@
   <ItemGroup>
     <ClInclude Include="include\text.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="functions.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="variables.h">
+      <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

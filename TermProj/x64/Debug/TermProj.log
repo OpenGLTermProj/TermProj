@@ -1,27 +1,69 @@
 ﻿  TermProj_main.cpp
-C:\repo\TermProj\TermProj\TermProj_main.cpp(40,20): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(92,12): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(449,11): warning C4244: '초기화 중': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(450,11): warning C4244: '초기화 중': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(530,10): warning C4244: '초기화 중': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(531,15): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(531,24): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(533,10): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(533,20): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(535,10): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(535,20): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(537,18): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(539,11): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(539,21): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(541,11): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(541,21): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(543,10): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(543,19): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(555,16): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(555,26): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(581,39): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(604,23): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(605,22): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(606,22): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
-C:\repo\TermProj\TermProj\TermProj_main.cpp(607,23): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\TermProj_main.cpp(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+C:\repo\TermProj\TermProj\TermProj_main.cpp(15,12): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  functions.cpp
+C:\repo\TermProj\TermProj\functions.cpp(47,10): warning C4244: '초기화 중': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\repo\TermProj\TermProj\functions.cpp(48,15): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\functions.cpp(48,24): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\functions.cpp(50,10): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\functions.cpp(50,20): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\functions.cpp(52,10): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\functions.cpp(52,20): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\functions.cpp(54,18): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\functions.cpp(56,11): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\functions.cpp(56,21): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\functions.cpp(58,11): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\functions.cpp(58,21): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\functions.cpp(60,10): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\functions.cpp(60,19): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\functions.cpp(72,16): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\functions.cpp(72,26): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\functions.cpp(98,39): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\repo\TermProj\TermProj\functions.cpp(121,23): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\functions.cpp(122,22): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\functions.cpp(123,22): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\functions.cpp(124,23): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
+C:\repo\TermProj\TermProj\functions.cpp(249,11): warning C4244: '초기화 중': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\repo\TermProj\TermProj\functions.cpp(250,11): warning C4244: '초기화 중': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  코드를 생성하고 있습니다...
+glfw3.lib(window.obj) : warning LNK4099: 'glfw.pdb' PDB를 'glfw3.lib(window.obj)' 또는 'C:\repo\TermProj\x64\Debug\glfw.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(input.obj) : warning LNK4099: 'glfw.pdb' PDB를 'glfw3.lib(input.obj)' 또는 'C:\repo\TermProj\x64\Debug\glfw.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(init.obj) : warning LNK4099: 'glfw.pdb' PDB를 'glfw3.lib(init.obj)' 또는 'C:\repo\TermProj\x64\Debug\glfw.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(context.obj) : warning LNK4099: 'glfw.pdb' PDB를 'glfw3.lib(context.obj)' 또는 'C:\repo\TermProj\x64\Debug\glfw.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(win32_window.obj) : warning LNK4099: 'glfw.pdb' PDB를 'glfw3.lib(win32_window.obj)' 또는 'C:\repo\TermProj\x64\Debug\glfw.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(win32_thread.obj) : warning LNK4099: 'glfw.pdb' PDB를 'glfw3.lib(win32_thread.obj)' 또는 'C:\repo\TermProj\x64\Debug\glfw.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(win32_joystick.obj) : warning LNK4099: 'glfw.pdb' PDB를 'glfw3.lib(win32_joystick.obj)' 또는 'C:\repo\TermProj\x64\Debug\glfw.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(win32_time.obj) : warning LNK4099: 'glfw.pdb' PDB를 'glfw3.lib(win32_time.obj)' 또는 'C:\repo\TermProj\x64\Debug\glfw.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(win32_init.obj) : warning LNK4099: 'glfw.pdb' PDB를 'glfw3.lib(win32_init.obj)' 또는 'C:\repo\TermProj\x64\Debug\glfw.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(win32_monitor.obj) : warning LNK4099: 'glfw.pdb' PDB를 'glfw3.lib(win32_monitor.obj)' 또는 'C:\repo\TermProj\x64\Debug\glfw.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(monitor.obj) : warning LNK4099: 'glfw.pdb' PDB를 'glfw3.lib(monitor.obj)' 또는 'C:\repo\TermProj\x64\Debug\glfw.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(vulkan.obj) : warning LNK4099: 'glfw.pdb' PDB를 'glfw3.lib(vulkan.obj)' 또는 'C:\repo\TermProj\x64\Debug\glfw.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(wgl_context.obj) : warning LNK4099: 'glfw.pdb' PDB를 'glfw3.lib(wgl_context.obj)' 또는 'C:\repo\TermProj\x64\Debug\glfw.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(egl_context.obj) : warning LNK4099: 'glfw.pdb' PDB를 'glfw3.lib(egl_context.obj)' 또는 'C:\repo\TermProj\x64\Debug\glfw.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(osmesa_context.obj) : warning LNK4099: 'glfw.pdb' PDB를 'glfw3.lib(osmesa_context.obj)' 또는 'C:\repo\TermProj\x64\Debug\glfw.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+freetype.lib(ftinit.obj) : warning LNK4099: 'freetype.pdb' PDB를 'freetype.lib(ftinit.obj)' 또는 'C:\repo\TermProj\x64\Debug\freetype.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+freetype.lib(ftbase.obj) : warning LNK4099: 'freetype.pdb' PDB를 'freetype.lib(ftbase.obj)' 또는 'C:\repo\TermProj\x64\Debug\freetype.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+freetype.lib(autofit.obj) : warning LNK4099: 'freetype.pdb' PDB를 'freetype.lib(autofit.obj)' 또는 'C:\repo\TermProj\x64\Debug\freetype.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+freetype.lib(truetype.obj) : warning LNK4099: 'freetype.pdb' PDB를 'freetype.lib(truetype.obj)' 또는 'C:\repo\TermProj\x64\Debug\freetype.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+freetype.lib(type1.obj) : warning LNK4099: 'freetype.pdb' PDB를 'freetype.lib(type1.obj)' 또는 'C:\repo\TermProj\x64\Debug\freetype.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+freetype.lib(cff.obj) : warning LNK4099: 'freetype.pdb' PDB를 'freetype.lib(cff.obj)' 또는 'C:\repo\TermProj\x64\Debug\freetype.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+freetype.lib(type1cid.obj) : warning LNK4099: 'freetype.pdb' PDB를 'freetype.lib(type1cid.obj)' 또는 'C:\repo\TermProj\x64\Debug\freetype.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+freetype.lib(pfr.obj) : warning LNK4099: 'freetype.pdb' PDB를 'freetype.lib(pfr.obj)' 또는 'C:\repo\TermProj\x64\Debug\freetype.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+freetype.lib(type42.obj) : warning LNK4099: 'freetype.pdb' PDB를 'freetype.lib(type42.obj)' 또는 'C:\repo\TermProj\x64\Debug\freetype.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+freetype.lib(winfnt.obj) : warning LNK4099: 'freetype.pdb' PDB를 'freetype.lib(winfnt.obj)' 또는 'C:\repo\TermProj\x64\Debug\freetype.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+freetype.lib(pcf.obj) : warning LNK4099: 'freetype.pdb' PDB를 'freetype.lib(pcf.obj)' 또는 'C:\repo\TermProj\x64\Debug\freetype.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+freetype.lib(psaux.obj) : warning LNK4099: 'freetype.pdb' PDB를 'freetype.lib(psaux.obj)' 또는 'C:\repo\TermProj\x64\Debug\freetype.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+freetype.lib(psmodule.obj) : warning LNK4099: 'freetype.pdb' PDB를 'freetype.lib(psmodule.obj)' 또는 'C:\repo\TermProj\x64\Debug\freetype.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+freetype.lib(pshinter.obj) : warning LNK4099: 'freetype.pdb' PDB를 'freetype.lib(pshinter.obj)' 또는 'C:\repo\TermProj\x64\Debug\freetype.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+freetype.lib(raster.obj) : warning LNK4099: 'freetype.pdb' PDB를 'freetype.lib(raster.obj)' 또는 'C:\repo\TermProj\x64\Debug\freetype.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+freetype.lib(sfnt.obj) : warning LNK4099: 'freetype.pdb' PDB를 'freetype.lib(sfnt.obj)' 또는 'C:\repo\TermProj\x64\Debug\freetype.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+freetype.lib(smooth.obj) : warning LNK4099: 'freetype.pdb' PDB를 'freetype.lib(smooth.obj)' 또는 'C:\repo\TermProj\x64\Debug\freetype.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+freetype.lib(bdf.obj) : warning LNK4099: 'freetype.pdb' PDB를 'freetype.lib(bdf.obj)' 또는 'C:\repo\TermProj\x64\Debug\freetype.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+freetype.lib(ftsystem.obj) : warning LNK4099: 'freetype.pdb' PDB를 'freetype.lib(ftsystem.obj)' 또는 'C:\repo\TermProj\x64\Debug\freetype.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+freetype.lib(ftgzip.obj) : warning LNK4099: 'freetype.pdb' PDB를 'freetype.lib(ftgzip.obj)' 또는 'C:\repo\TermProj\x64\Debug\freetype.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+freetype.lib(ftlzw.obj) : warning LNK4099: 'freetype.pdb' PDB를 'freetype.lib(ftlzw.obj)' 또는 'C:\repo\TermProj\x64\Debug\freetype.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+freetype.lib(ftbitmap.obj) : warning LNK4099: 'freetype.pdb' PDB를 'freetype.lib(ftbitmap.obj)' 또는 'C:\repo\TermProj\x64\Debug\freetype.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+freetype.lib(ftdebug.obj) : warning LNK4099: 'freetype.pdb' PDB를 'freetype.lib(ftdebug.obj)' 또는 'C:\repo\TermProj\x64\Debug\freetype.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+     C:\repo\TermProj\x64\Debug\TermProj.lib 라이브러리 및 C:\repo\TermProj\x64\Debug\TermProj.exp 개체를 생성하고 있습니다.
+LINK : warning LNK4098: 'MSVCRT' defaultlib가 다른 라이브러리와 충돌합니다. /NODEFAULTLIB:library를 사용하십시오.
   TermProj.vcxproj -> C:\repo\TermProj\x64\Debug\TermProj.exe
