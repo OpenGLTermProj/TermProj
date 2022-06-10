@@ -105,6 +105,72 @@ bool PositionCheck()
 }
 
 
+/// <summary>
+/// Drawing Card
+/// </summary>
+/// <param name="num">card number</param>
+/// <param name="status">0 : stop 0, 1 : up 360, 2 : down 360, 3 : up 180, 4 : down 180, 5 : stop 180 </param>
+/// <returns>model matrix(glm::mat4)</returns>
+glm::mat4 DrawCard(int num, int status, float &angle)
+{
+	glm::mat4 model(1.0f);
+	
+	switch (status)
+	{
+	case 0:
+		model = glm::translate(model, card[num]);
+		model = glm::rotate(model, glm::radians(-90.f), glm::vec3(1, 0, 0));
+		model = glm::rotate(model, glm::radians(cAngle[num]), glm::vec3(0, 0, 1));
+		//model = glm::rotate(model, glm::radians(hAngle[0]), glm::vec3(1, 0, 0));
+		//model = glm::rotate(model, glm::radians(hAngle[1]), glm::vec3(0, 1, 0));
+		//model = glm::rotate(model, glm::radians(hAngle[2]), glm::vec3(0, 0, 1));
+		break;
+	case 1:
+		card[num].y += 0.003;
+		angle += 3.f;
+		model = glm::translate(model, card[num]);
+		model = glm::rotate(model, glm::radians(angle), glm::vec3(1, 0, 0));
+		model = glm::rotate(model, glm::radians(cAngle[num]), glm::vec3(0, 0, 1));
+		break;
+	case 2:
+		card[num].y -= 0.003;
+		angle += 3.f;
+		model = glm::translate(model, card[num]);
+		model = glm::rotate(model, glm::radians(angle), glm::vec3(1, 0, 0));
+		model = glm::rotate(model, glm::radians(cAngle[num]), glm::vec3(0, 0, 1));
+		break;
+	case 3:
+		card[num].y += 0.003;
+		angle += 1.5f;
+		rotateAngleZ[num] += (cAngle[num] * (-1)) / 60.f;
+		model = glm::translate(model, card[num]);
+		model = glm::rotate(model, glm::radians(-90.f), glm::vec3(1, 0, 0));
+		model = glm::rotate(model, glm::radians(angle), glm::vec3(0, 1, 0));
+		model = glm::rotate(model, glm::radians(rotateAngleZ[num]), glm::vec3(0, 0, 1));
+		break;
+	case 4:
+		card[num].y -= 0.002;
+		angle += 1.5f;
+		rotateAngleZ[num] += (cAngle[num] * (-1)) / 60.f;
+		model = glm::translate(model, card[num]);
+		model = glm::rotate(model, glm::radians(-90.f), glm::vec3(1, 0, 0));
+		model = glm::rotate(model, glm::radians(angle), glm::vec3(0, 1, 0));
+		model = glm::rotate(model, glm::radians(rotateAngleZ[num]), glm::vec3(0, 0, 1));
+		break;
+	case 5:
+		model = glm::translate(model, card[num]);
+		model = glm::rotate(model, glm::radians(-90.f), glm::vec3(1, 0, 0));
+		model = glm::rotate(model, glm::radians(180.f), glm::vec3(0, 1, 0));
+		model = glm::rotate(model, glm::radians(rotateAngleZ[num]), glm::vec3(0, 0, 1));
+		break;
+	default:
+		break;
+	}
+	
+	model = glm::scale(model, glm::vec3(0.025f, 0.025f, 0.025f));
+	return model;
+}
+
 // utility function for loading a 2D texture from file
 // ---------------------------------------------------
 unsigned int loadTexture(char const* path)
@@ -247,6 +313,29 @@ void processInput(GLFWwindow* window)
 			camera.Position.z += Tz;
 		}
 	}
+
+	// debug
+	/*if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+		player[2] += speed;
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+		player[2] -= speed;
+	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+		player[0] += speed;
+	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+		player[0] -= speed;
+
+	if (glfwGetKey(window, GLFW_KEY_KP_7) == GLFW_PRESS)
+		hAngle[0] -= 1;
+	if (glfwGetKey(window, GLFW_KEY_KP_9) == GLFW_PRESS)
+		hAngle[0] += 1;
+	if (glfwGetKey(window, GLFW_KEY_KP_4) == GLFW_PRESS)
+		hAngle[1] -= 1;
+	if (glfwGetKey(window, GLFW_KEY_KP_6) == GLFW_PRESS)
+		hAngle[1] += 1;
+	if (glfwGetKey(window, GLFW_KEY_KP_1) == GLFW_PRESS)
+		hAngle[2] -= 1;
+	if (glfwGetKey(window, GLFW_KEY_KP_3) == GLFW_PRESS)
+		hAngle[2] += 1;*/
 
 	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
 		pAngle += 1;

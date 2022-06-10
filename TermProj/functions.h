@@ -32,7 +32,7 @@
 
 #include "variables.h"
 
-
+extern glm::mat4 DrawCard(int num, int status, float &angle);
 extern void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 extern void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 extern void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);

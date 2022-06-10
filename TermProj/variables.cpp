@@ -19,13 +19,22 @@ Shader cubeShader;
 
 // transition
 glm::vec3 player = glm::vec3(0, 0.182, 0);
-glm::vec3 card[7] = { glm::vec3(0.32, 0.15, 0.095), glm::vec3(0.255, 0.15, -0.029), glm::vec3(0.137, 0.15, -0.11), glm::vec3(0, 0.15, -0.142),
-					 glm::vec3(-0.137, 0.15, -0.11), glm::vec3(-0.255, 0.15, -0.029), glm::vec3(-0.32, 0.15, 0.095) };
+glm::vec3 card[7] = { glm::vec3(0.32, 0.145, 0.095), glm::vec3(0.255, 0.145, -0.029), glm::vec3(0.137, 0.145, -0.11), glm::vec3(0, 0.145, -0.142),
+					 glm::vec3(-0.137, 0.145, -0.11), glm::vec3(-0.255, 0.145, -0.029), glm::vec3(-0.32, 0.145, 0.095) };
 float pAngle = 0.0;
-float cAngle[7] = { -75, -50, -25, 0, 25, 50, 75 };
+float cAngle[7] = { -75, -50, -25, 0, 25, 50, 75 }; // �ʱ� rotate ���� �� ��
+float rotateAngleX[7] = { -90.f, -90.f, -90.f, -90.f, -90.f, -90.f, -90.f }; // Card Animation�� ����ϴ� angleX ��
+float rotateAngleY[7] = { 0.f };
+float rotateAngleZ[7] = { -75, -50, -25, 0, 25, 50, 75 }; // Card Animation�� ����ϴ� angleZ ��
 float speed = 0.001;
 int jokerIndex = 0;
+int selected[7] = { 0, };
 int selectCard = 0;
+int heart = 3;
+
+// debug
+float hAngle[3] = { 0, };
+
 
 // settings
 const unsigned int SCR_WIDTH = 1366;

@@ -28,11 +28,19 @@ extern Model jCard;
 // transition
 extern glm::vec3 player;
 extern glm::vec3 card[7];
-extern float pAngle  ;
+extern float rotateAngleX[7];
+extern float rotateAngleY[7];
+extern float rotateAngleZ[7];
+extern float pAngle;
 extern float cAngle[7];
 extern float speed ;
 extern int jokerIndex;
 extern int selectCard ;
+extern int selected[7];
+extern int heart;
+
+// debug
+extern float hAngle[3];
 
 extern unsigned int cubeTexture;
 
