@@ -60,6 +60,7 @@ extern Model jCard;
 extern glm::vec3 room;
 extern glm::vec3 player;
 extern glm::vec3 card[7];
+extern glm::vec3 card_mid[7];
 extern float rotateAngleX[7];
 extern float rotateAngleY[7];
 extern float rotateAngleZ[7];

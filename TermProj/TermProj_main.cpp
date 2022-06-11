@@ -75,9 +75,8 @@ int main(int argc, char** argv)
 	Shader jCardShader("shader/jokercard.vs", "shader/jokercard.fs");
 	Shader eCardShader("shader/emptycard.vs", "shader/emptycard.fs");
 	Shader cubeShader("shader/cube.vs", "shader/cube.fs");
-	Shader lightingShader("shader/light_casters.vs", "shader/light_casters.fs");
+	Shader lightingShader("shader/multiple_lights.vs", "shader/multiple_lights.fs");
 	Shader lobbyShader("shader/lobby.vs", "shader/lobby.fs");
-	Shader skyboxShader("shader/skybox.vs", "shader/skybox.fs");
 	lightingShader.use();
 	lightingShader.setInt("material.diffuse", 0);
 	lightingShader.setInt("material.specular", 1);
@@ -107,8 +106,6 @@ int main(int argc, char** argv)
 
 	// load models
 	// -----------
-
-
 	glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(SCR_WIDTH), 0.0f, static_cast<float>(SCR_HEIGHT));
 	textShader.use();
 	glUniformMatrix4fv(glGetUniformLocation(textShader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
@@ -221,21 +218,34 @@ int main(int argc, char** argv)
 		case State::InGame:
 		{
 			lightingShader.use();
-			//lightingShader.setVec3("light.position", glm::vec3(card[selectCard].x, 0.5, card[selectCard].z));
-			lightingShader.setVec3("light.position", glm::vec3(0, 3, 0));
-			lightingShader.setVec3("light.direction", glm::vec3(0, -1, 0));
-			lightingShader.setFloat("light.cutOff", glm::cos(glm::radians(90.f)));
 			lightingShader.setVec3("viewPos", camera.Position);
+			lightingShader.setFloat("material.shininess", 32.0f);
+			// directional light
+			lightingShader.setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f);
+			lightingShader.setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
+			lightingShader.setVec3("dirLight.diffuse", 0.4f, 0.4f, 0.4f);
+			lightingShader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
 
-			// light properties
-			lightingShader.setVec3("light.ambient", 0.1f, 0.1f, 0.1f);
-			// we configure the diffuse intensity slightly higher; the right lighting conditions differ with each lighting method and environment.
-			// each environment and lighting type requires some tweaking to get the best out of your environment.
-			lightingShader.setVec3("light.diffuse", 0.8f, 0.8f, 0.8f);
-			lightingShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
-			lightingShader.setFloat("light.constant", 1.0f);
-			lightingShader.setFloat("light.linear", 0.09f);
-			lightingShader.setFloat("light.quadratic", 0.032f);
+			// point light 1
+			lightingShader.setVec3("pointLights[0].position", glm::vec3(0, 3, 0));
+			lightingShader.setVec3("pointLights[0].ambient", 0.05f, 0.05f, 0.05f);
+			lightingShader.setVec3("pointLights[0].diffuse", 0.8f, 0.8f, 0.8f);
+			lightingShader.setVec3("pointLights[0].specular", 1.0f, 1.0f, 1.0f);
+			lightingShader.setFloat("pointLights[0].constant", 1.0f);
+			lightingShader.setFloat("pointLights[0].linear", 0.09f);
+			lightingShader.setFloat("pointLights[0].quadratic", 0.032f);
+
+			// spotLight
+			lightingShader.setVec3("spotLight.position", glm::vec3(card_mid[selectCard].x, 0.5, card_mid[selectCard].z));
+			lightingShader.setVec3("spotLight.direction", glm::vec3(0, -1, 0));
+			lightingShader.setVec3("spotLight.ambient", 0.0f, 0.0f, 0.0f);
+			lightingShader.setVec3("spotLight.diffuse", 1.0f, 1.0f, 1.0f);
+			lightingShader.setVec3("spotLight.specular", 1.0f, 1.0f, 1.0f);
+			lightingShader.setFloat("spotLight.constant", 1.0f);
+			lightingShader.setFloat("spotLight.linear", 0.09f);
+			lightingShader.setFloat("spotLight.quadratic", 0.032f);
+			lightingShader.setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
+			lightingShader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
 
 			// material properties
 			lightingShader.setFloat("material.shininess", 32.0f);
@@ -248,8 +258,8 @@ int main(int argc, char** argv)
 
 			// world transformation
 			glm::mat4 model = glm::mat4(1.0f);
-			lightingShader.setMat4("model", model);
-
+			model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+			model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
 			lightingShader.setMat4("model", model);
 			table.Draw(lightingShader);
 

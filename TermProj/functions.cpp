@@ -84,21 +84,14 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 
 int GetCardOnPlayer(float x, float z)
 {
-	float r = pow(0.03, 2); // Card�� Select �� ����
-	float a = 0.3, b = 0.1;
-	if (pow(x - a, 2) + pow(z - b, 2) < r) return 0;
-	a = 0.24; b = 0.02;
-	if (pow(x - a, 2) + pow(z - b, 2) < r) 	return 1;
-	a = 0.13; b = -0.1;
-	if (pow(x - a, 2) + pow(z - b, 2) < r)	return 2;
-	a = 0; b = -0.13;
-	if (pow(x - a, 2) + pow(z - b, 2) < r)	return 3;
-	a = -0.13; b = -0.1;
-	if (pow(x - a, 2) + pow(z - b, 2) < r)	return 4;
-	a = -0.24; b = 0.02;
-	if (pow(x - a, 2) + pow(z - b, 2) < r)	return 5;
-	a = -0.3, b = 0.1;
-	if (pow(x - a, 2) + pow(z - b, 2) < r)	return 6;
+	float r = pow(0.06, 2); // Card�� Select �� ����
+	for (int i = 0; i < 7; i++)
+	{
+		if (pow(x - card_mid[i].x, 2) + pow(z - card_mid[i].z, 2) < r)
+		{
+			return i;
+		}
+	}
 	return 7;
 }
 
@@ -404,7 +397,7 @@ int initText() {
 	}
 
 	// find path to font
-	std::string font_name = FileSystem::getPath("resources/fonts/joker_final.ttf");
+	std::string font_name = FileSystem::getPath("resources/fonts/Antonio-Regular.ttf");
 	if (font_name.empty())
 	{
 		std::cout << "ERROR::FREETYPE: Failed to load font_name" << std::endl;

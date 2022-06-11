@@ -24,7 +24,9 @@ Shader cubeShader;
 glm::vec3 room = glm::vec3(0.0, 1.2, 0);
 glm::vec3 player = glm::vec3(0, 0.182, 0);
 glm::vec3 card[7] = { glm::vec3(0.32, 0.145, 0.095), glm::vec3(0.255, 0.145, -0.029), glm::vec3(0.137, 0.145, -0.11), glm::vec3(0, 0.145, -0.142),
-					 glm::vec3(-0.137, 0.145, -0.11), glm::vec3(-0.255, 0.145, -0.029), glm::vec3(-0.32, 0.145, 0.095) };
+					 glm::vec3(-0.137, 0.145, -0.11), glm::vec3(-0.255, 0.145, -0.029), glm::vec3(-0.32, 0.145, 0.095) }; // card 그릴 때 사용하는 좌표
+glm::vec3 card_mid[7] = { glm::vec3(0.307, 0, 0.099), glm::vec3(0.247, 0, -0.022), glm::vec3(0.133, 0, -0.101), glm::vec3(0, 0, -0.101),
+							glm::vec3(-0.133, 0, -0.101), glm::vec3(-0.247, 0, -0.022), glm::vec3(-0.307, 0, 0.099) }; // card 중앙 좌표
 float pAngle = 0.0;
 float cAngle[7] = { -75, -50, -25, 0, 25, 50, 75 }; // �ʱ� rotate ���� �� ��
 float rotateAngleX[7] = { -90.f, -90.f, -90.f, -90.f, -90.f, -90.f, -90.f }; // Card Animation�� ����ϴ� angleX ��
