@@ -86,6 +86,9 @@ int main(int argc, char** argv)
 	unsigned int cubeTexture = loadTexture(FileSystem::getPath("resources/textures/container.jpg").c_str());
 	unsigned int backgroundTexture = loadTexture(FileSystem::getPath("resources/textures/joker_with_letter.jpg").c_str());
 	unsigned int buttonTexture = loadTexture(FileSystem::getPath("resources/textures/button.jpg").c_str());
+	unsigned int buttonStartTexture = loadTexture(FileSystem::getPath("resources/textures/startButton.jpg").c_str());
+	unsigned int buttonHelpTexture = loadTexture(FileSystem::getPath("resources/textures/helpButton.jpg").c_str());
+	unsigned int buttonExitTexture = loadTexture(FileSystem::getPath("resources/textures/exitButton.jpg").c_str());
 
 
 
@@ -109,7 +112,10 @@ int main(int argc, char** argv)
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
-
+	load2D(Vertices::Start, startButtonVBO, startButtonVAO, startButtonEBO);
+	load2D(Vertices::Background, backgroundVBO, backgroundVAO, backgroundEBO);
+	load2D(Vertices::Help, helpButtonVBO, helpButtonVAO, helpButtonEBO);
+	load2D(Vertices::Exit, exitButtonVBO, exitButtonVAO, exitButtonEBO);
 	
 	//load2D(cubeVertices, cubeVBO, cubeVAO, cubeEBO);
 
@@ -144,10 +150,6 @@ int main(int argc, char** argv)
 		case State::Lobby:
 		{
 
-			load2D(Vertices::Start, startButtonVBO, startButtonVAO, startButtonEBO);
-			load2D(Vertices::Background, backgroundVBO, backgroundVAO, backgroundEBO);
-			load2D(Vertices::Help, helpButtonVBO, helpButtonVAO, helpButtonEBO);
-			load2D(Vertices::Exit, exitButtonVBO, exitButtonVAO, exitButtonEBO);
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 			lobbyShader.use();
 	
@@ -155,23 +157,25 @@ int main(int argc, char** argv)
 			glBindVertexArray(backgroundVAO);
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-			glBindTexture(GL_TEXTURE_2D, buttonTexture);
+			buttonSelected == MousePos::StartButton ? glBindTexture(GL_TEXTURE_2D, buttonStartTexture) : glBindTexture(GL_TEXTURE_2D, buttonTexture);
 			glBindVertexArray(startButtonVAO);
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT,0);
 
-			glBindTexture(GL_TEXTURE_2D, buttonTexture);
+			buttonSelected == MousePos::HelpButton ? glBindTexture(GL_TEXTURE_2D, buttonHelpTexture) : glBindTexture(GL_TEXTURE_2D, buttonTexture);
 			glBindVertexArray(helpButtonVAO);
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-			glBindTexture(GL_TEXTURE_2D, buttonTexture);
+			buttonSelected == MousePos::ExitButton ? glBindTexture(GL_TEXTURE_2D, buttonExitTexture) : glBindTexture(GL_TEXTURE_2D, buttonTexture);
 			glBindVertexArray(exitButtonVAO);
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 			string debug1 = string_format(" Mouse X : %f  Mouse Y : %f", lastX, lastY);
 			string debug2 = string_format("Front : %f, %f, %f | Position : %f, %f, %f | Yaw : %f | Pitch : %f", camera.Front[0], camera.Front[1], camera.Front[2],
 				camera.Position[0], camera.Position[1], camera.Position[2], camera.Yaw, camera.Pitch);
+			string debug3 = string_format(" Mouse nomal X : %f  Mouse  nomal Y : %f", syncedX, syncedY);
 			RenderText(textShader, debug1, 25.0f, 25.0f, 0.5f, glm::vec3(0.5, 0.8f, 0.2f));
 			RenderText(textShader, debug2, 25.0f, 50.0f, 0.5f, glm::vec3(0.5, 0.8f, 0.2f));
+			RenderText(textShader, debug3, 25.0f, 75.0f, 0.5f, glm::vec3(0.5, 0.8f, 0.2f));
 
 			break;
 		}

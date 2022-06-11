@@ -29,7 +29,16 @@ extern enum Vertices : short
 	Exit
 };
 
+extern enum MousePos : short
+{
+	Idle =0,
+	StartButton,
+	HelpButton,
+	ExitButton
+};
+
 extern State gameState;
+extern MousePos buttonSelected;
 
 extern Shader textShader;
 extern Shader textShader;
@@ -98,6 +107,10 @@ extern float helpButtonVertices[32];
 extern float exitButtonVertices[32];
 extern unsigned int boxIndices[6];
 
+extern glm::vec2 startButtonPosition;
+extern glm::vec2 helpButtonPosition;
+extern glm::vec2 exittButtonPosition;
+
 extern unsigned int backgroundVBO, backgroundVAO, backgroundEBO;
 extern unsigned int startButtonVBO, startButtonVAO, startButtonEBO;
 extern unsigned int helpButtonVBO, helpButtonVAO, helpButtonEBO;
@@ -105,5 +118,7 @@ extern unsigned int exitButtonVBO, exitButtonVAO, exitButtonEBO;
 extern unsigned int cubeVAO, cubeVBO, cubeEBO;
 
 
+extern float syncedY;
+extern float syncedX;
 
 #endif

@@ -7,6 +7,9 @@
 
 const char* logl_root = "C:/repo/TermProj";
 
+State gameState = State::Lobby;
+MousePos buttonSelected = MousePos::Idle;
+
 Model jCard;
 Model eCard;
 Model table;
@@ -40,6 +43,10 @@ float hAngle[3] = { 0, };
 const unsigned int SCR_WIDTH = 1366;
 const unsigned int SCR_HEIGHT = 768;
 
+
+float syncedY;
+float syncedX;
+
 // camera
 Camera camera(glm::vec3(0.0f, 0.5f, -0.5f), glm::vec3(0.f, 1.f, 0.f), 90.f, -35.f);
 float lastX = SCR_WIDTH / 2.0f;
@@ -55,7 +62,7 @@ unsigned int VAO, VBO;
 unsigned int cubeVAO, cubeVBO, cubeEBO;
 unsigned int cubeTexture;
 
-State gameState = State::Lobby;
+
 
 float backgroundVertices[] = {
 	// positions          // colors           // texture coords
@@ -95,7 +102,7 @@ float exitButtonVertices[] = {
 	0.8f,  -0.4f, 0.08f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
 };
 
-extern float cubeVertices[] = {
+float cubeVertices[] = {
 	// positions          // texture Coords
 	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
 	 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
@@ -139,6 +146,12 @@ extern float cubeVertices[] = {
 	-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
 	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 };
+
+
+
+glm::vec2 startButtonPosition= glm::vec2(-0.6f, -0.6f);
+glm::vec2 helpButtonPosition= glm::vec2(0.0f, -0.6f);
+glm::vec2 exittButtonPosition= glm::vec2(0.6f, -0.6f);
 
 unsigned int backgroundVBO=NULL, backgroundVAO=NULL, backgroundEBO=NULL;
 unsigned int startButtonVBO = NULL, startButtonVAO = NULL, startButtonEBO = NULL;

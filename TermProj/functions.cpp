@@ -19,6 +19,33 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 	float xpos = static_cast<float>(xposIn);
 	float ypos = static_cast<float>(yposIn);
 
+	if (gameState == State::Lobby)
+	{
+		syncedY = -(2 * ypos / SCR_HEIGHT - 1);
+		syncedX = (2 * xpos / SCR_WIDTH - 1);
+
+		if(abs( startButtonPosition.x - syncedX) < 0.2f 
+			&& abs(startButtonPosition.y - syncedY) < 0.2f)
+		{
+			buttonSelected= MousePos::StartButton;
+		}
+		else if (abs(helpButtonPosition.x - syncedX) < 0.2f
+			&& abs(helpButtonPosition.y - syncedY)< 0.2f)
+		{
+			buttonSelected = MousePos::HelpButton;
+		}
+		else if (abs(exittButtonPosition.x - syncedX) < 0.2f
+			&& abs(exittButtonPosition.y - syncedY) < 0.2f)
+		{
+			buttonSelected = MousePos::ExitButton;
+		}
+		else
+		{
+			buttonSelected = MousePos::Idle;
+		}
+		
+	}
+
 	if (firstMouse)
 	{
 		lastX = xpos;
@@ -32,7 +59,6 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 	lastX = xpos;
 	lastY = ypos;
 
-	camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
