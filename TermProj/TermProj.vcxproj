@@ -146,7 +146,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="functions.cpp" />
-    <ClCompile Include="include\learnopengl\model.cpp" />
     <ClCompile Include="TermProj_main.cpp" />
     <ClCompile Include="variables.cpp" />
   </ItemGroup>

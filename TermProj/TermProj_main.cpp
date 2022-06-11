@@ -69,6 +69,9 @@ int main(int argc, char** argv)
 	Model eCard(FileSystem::getPath("Data/card/emptycard.obj"));
 	Model table(FileSystem::getPath("Data/table/table_final.obj"));
 	Model hammer(FileSystem::getPath("Data/hammer/hammer.obj"));
+	Model clown(FileSystem::getPath("Data/clown/Standing Melee Attack Downward.dae"));
+	Animation hammerAnimation(FileSystem::getPath("Data/clown/Standing Melee Attack Downward.dae"), &clown);
+	Animator animator(&hammerAnimation);
 
 	Shader textShader("shader/text.vs", "shader/text.fs");
 	Shader tableShader("shader/table.vs", "shader/table.fs");
@@ -81,15 +84,6 @@ int main(int argc, char** argv)
 	lightingShader.setInt("material.diffuse", 0);
 	lightingShader.setInt("material.specular", 1);
 
-	vector<std::string> faces =
-	{
-		FileSystem::getPath("resources/textures/skybox/right.jpg"),
-		FileSystem::getPath("resources/textures/skybox/left.jpg"),
-		FileSystem::getPath("resources/textures/skybox/top.jpg"),
-		FileSystem::getPath("resources/textures/skybox/bottom.jpg"),
-		FileSystem::getPath("resources/textures/skybox/front.jpg"),
-		FileSystem::getPath("resources/textures/skybox/back.jpg")
-	};
 
 	// load textures
 // -------------
@@ -149,7 +143,7 @@ int main(int argc, char** argv)
 		// input
 		// -----
 		processInput(window);
-
+		animator.UpdateAnimation(deltaTime);
 		// render
 		// ------
 		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
@@ -262,6 +256,19 @@ int main(int argc, char** argv)
 			model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
 			lightingShader.setMat4("model", model);
 			table.Draw(lightingShader);
+
+			
+			auto transforms = animator.GetFinalBoneMatrices();
+			for (int i = 0; i < transforms.size(); ++i)
+				lightingShader.setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
+		
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, joker); // translate it down so it's at the center of the scene
+			model = glm::scale(model, glm::vec3(0.003f, 0.003f, 0.003f)); 
+			model = glm::rotate(model,glm::radians(180.f), glm::vec3(0, 1, 0));
+			lightingShader.setMat4("model", model);
+		
+			clown.Draw(lightingShader);
 
 			for (int i = 0; i < 7; i++)
 			{

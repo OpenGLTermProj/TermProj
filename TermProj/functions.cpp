@@ -73,6 +73,7 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 	lastX = xpos;
 	lastY = ypos;
 
+
 }
 
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
@@ -510,6 +511,9 @@ void load2D(Vertices vertex, unsigned int& VBO, unsigned int& VAO, unsigned int&
 		break;
 	case Vertices::Back:
 		glBufferData(GL_ARRAY_BUFFER, sizeof(backButtonVertices), backButtonVertices, GL_STATIC_DRAW);
+		break;
+	case Vertices::Cube:
+		glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertices), cubeVertices, GL_STATIC_DRAW);
 		break;
 	default:
 		break;

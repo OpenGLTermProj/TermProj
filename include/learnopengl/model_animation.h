@@ -34,6 +34,12 @@ public:
     bool gammaCorrection;
 	
 	
+    Model() {
+        textures_loaded = {};
+        meshes = {};
+        directory = "";
+        gammaCorrection = false;
+    };
 
     // constructor, expects a filepath to a 3D model.
     Model(string const &path, bool gamma = false) : gammaCorrection(gamma)

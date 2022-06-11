@@ -21,7 +21,9 @@ Shader eCardShader;
 Shader cubeShader;
 
 // transition
-glm::vec3 room = glm::vec3(0.0, 1.2, 0);
+glm::vec3 room = glm::vec3(0.0, 1.3, 0);
+glm::vec3 joker = glm::vec3(0.0f, -0.15f, 0.3f);
+
 glm::vec3 player = glm::vec3(0, 0.182, 0);
 glm::vec3 card[7] = { glm::vec3(0.32, 0.145, 0.095), glm::vec3(0.255, 0.145, -0.029), glm::vec3(0.137, 0.145, -0.11), glm::vec3(0, 0.145, -0.142),
 					 glm::vec3(-0.137, 0.145, -0.11), glm::vec3(-0.255, 0.145, -0.029), glm::vec3(-0.32, 0.145, 0.095) }; // card 그릴 때 사용하는 좌표
@@ -35,7 +37,7 @@ float rotateAngleZ[7] = { -75, -50, -25, 0, 25, 50, 75 }; // Card Animation��
 float speed = 0.001;
 int jokerIndex = 0;
 int selected[7] = { 0, };
-int selectCard = 0;
+int selectCard = 3;
 int heart = 3;
 
 // debug
@@ -51,7 +53,7 @@ float syncedY;
 float syncedX;
 
 // camera
-Camera camera(glm::vec3(0.0f, 0.5f, -0.5f), glm::vec3(0.f, 1.f, 0.f), 90.f, -35.f);
+Camera camera(glm::vec3(0.0f, 0.75f, -0.5f), glm::vec3(0.f, 1.f, 1.f), 90.f, -35.f);
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;

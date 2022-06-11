@@ -29,7 +29,8 @@ extern enum Vertices : short
 	Help,
 	Back,
 	Exit,
-	Skybox
+	Skybox,
+	Cube
 };
 
 extern enum MousePos : short
@@ -58,6 +59,7 @@ extern Model jCard;
 
 // transition
 extern glm::vec3 room;
+extern glm::vec3 joker;
 extern glm::vec3 player;
 extern glm::vec3 card[7];
 extern glm::vec3 card_mid[7];
