@@ -35,6 +35,7 @@ public:
 	
 	Model()
 	{
+		std::map<string, BoneInfo> m_BoneInfoMap = {};
 		vector<Texture> textures_loaded = {};
 		vector<Mesh>    meshes = {  };
 		string directory = "";
