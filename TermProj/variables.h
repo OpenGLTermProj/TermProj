@@ -57,6 +57,7 @@ extern Model eCard;
 extern Model jCard;
 
 // transition
+extern glm::vec3 room;
 extern glm::vec3 player;
 extern glm::vec3 card[7];
 extern float rotateAngleX[7];

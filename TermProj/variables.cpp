@@ -21,6 +21,7 @@ Shader eCardShader;
 Shader cubeShader;
 
 // transition
+glm::vec3 room = glm::vec3(0.0, 1.2, 0);
 glm::vec3 player = glm::vec3(0, 0.182, 0);
 glm::vec3 card[7] = { glm::vec3(0.32, 0.145, 0.095), glm::vec3(0.255, 0.145, -0.029), glm::vec3(0.137, 0.145, -0.11), glm::vec3(0, 0.145, -0.142),
 					 glm::vec3(-0.137, 0.145, -0.11), glm::vec3(-0.255, 0.145, -0.029), glm::vec3(-0.32, 0.145, 0.095) };
