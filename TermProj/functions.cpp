@@ -45,6 +45,20 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 		}
 		
 	}
+	else if (gameState == State::LobbyHelp)
+	{
+		syncedY = -(2 * ypos / SCR_HEIGHT - 1);
+		syncedX = (2 * xpos / SCR_WIDTH - 1);
+		if (abs(backButtonPosition.x - syncedX) < 0.2f
+			&& abs(backButtonPosition.y - syncedY) < 0.2f)
+		{
+			buttonSelected = MousePos::BackButton;
+		}
+		else
+		{
+			buttonSelected = MousePos::Idle;
+		}
+	}
 
 	if (firstMouse)
 	{
@@ -340,28 +354,6 @@ void processInput(GLFWwindow* window)
 		}
 	}
 
-	// debug
-	/*if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-		player[2] += speed;
-	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-		player[2] -= speed;
-	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-		player[0] += speed;
-	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-		player[0] -= speed;
-
-	if (glfwGetKey(window, GLFW_KEY_KP_7) == GLFW_PRESS)
-		hAngle[0] -= 1;
-	if (glfwGetKey(window, GLFW_KEY_KP_9) == GLFW_PRESS)
-		hAngle[0] += 1;
-	if (glfwGetKey(window, GLFW_KEY_KP_4) == GLFW_PRESS)
-		hAngle[1] -= 1;
-	if (glfwGetKey(window, GLFW_KEY_KP_6) == GLFW_PRESS)
-		hAngle[1] += 1;
-	if (glfwGetKey(window, GLFW_KEY_KP_1) == GLFW_PRESS)
-		hAngle[2] -= 1;
-	if (glfwGetKey(window, GLFW_KEY_KP_3) == GLFW_PRESS)
-		hAngle[2] += 1;*/
 
 	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
 		pAngle += 1;
@@ -372,6 +364,29 @@ void processInput(GLFWwindow* window)
 		player[1] += speed;
 	if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
 		player[1] -= speed;
+
+	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+	{
+		switch (buttonSelected)
+		{
+		case MousePos::Idle:
+			break;
+		case MousePos::StartButton:
+			gameState = State::InGame;
+			break;
+		case MousePos::HelpButton:
+			gameState = State::LobbyHelp;
+			break;
+		case MousePos::BackButton:
+			gameState = State::Lobby;
+			break;
+		case MousePos::ExitButton:
+				glfwSetWindowShouldClose(window, true);
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 int initText() {
@@ -499,6 +514,9 @@ void load2D(Vertices vertex, unsigned int& VBO, unsigned int& VAO, unsigned int&
 		break;
 	case Vertices::Exit:
 		glBufferData(GL_ARRAY_BUFFER, sizeof(exitButtonVertices), exitButtonVertices, GL_STATIC_DRAW);
+		break;
+	case Vertices::Back:
+		glBufferData(GL_ARRAY_BUFFER, sizeof(backButtonVertices), backButtonVertices, GL_STATIC_DRAW);
 		break;
 	default:
 		break;

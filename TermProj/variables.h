@@ -16,6 +16,7 @@
 extern enum State:short
 {
 	Lobby =0,
+	LobbyHelp,
 	InGame,
 	End
 
@@ -26,6 +27,7 @@ extern enum Vertices : short
 	Background=0,
 	Start,
 	Help,
+	Back,
 	Exit
 };
 
@@ -34,6 +36,7 @@ extern enum MousePos : short
 	Idle =0,
 	StartButton,
 	HelpButton,
+	BackButton,
 	ExitButton
 };
 
@@ -105,16 +108,19 @@ extern float backgroundVertices[32];
 extern float startButtonVertices[32];
 extern float helpButtonVertices[32];
 extern float exitButtonVertices[32];
+extern float backButtonVertices[32];
 extern unsigned int boxIndices[6];
 
 extern glm::vec2 startButtonPosition;
 extern glm::vec2 helpButtonPosition;
 extern glm::vec2 exittButtonPosition;
+extern glm::vec2 backButtonPosition;
 
 extern unsigned int backgroundVBO, backgroundVAO, backgroundEBO;
 extern unsigned int startButtonVBO, startButtonVAO, startButtonEBO;
 extern unsigned int helpButtonVBO, helpButtonVAO, helpButtonEBO;
 extern unsigned int exitButtonVBO, exitButtonVAO, exitButtonEBO;
+extern unsigned int backButtonVBO, backButtonVAO, backButtonEBO;
 extern unsigned int cubeVAO, cubeVBO, cubeEBO;
 
 

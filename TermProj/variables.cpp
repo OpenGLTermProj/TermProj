@@ -94,6 +94,15 @@ float helpButtonVertices[] = {
 	0.2f,  -0.4f, 0.08f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
 };
 
+float backButtonVertices[] = {
+	// positions          // colors           // texture coords
+   -0.8f,  0.4f, 0.08f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+   -0.8f,  0.8f, 0.08f,    0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+   -0.4f,  0.8f, 0.08f,    0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+   -0.4f,  0.4f, 0.08f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
+};
+
+
 float exitButtonVertices[] = {
 	// positions          // colors           // texture coords
 	 0.4f,  -0.4f, 0.08f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
@@ -152,8 +161,10 @@ float cubeVertices[] = {
 glm::vec2 startButtonPosition= glm::vec2(-0.6f, -0.6f);
 glm::vec2 helpButtonPosition= glm::vec2(0.0f, -0.6f);
 glm::vec2 exittButtonPosition= glm::vec2(0.6f, -0.6f);
+glm::vec2 backButtonPosition = glm::vec2(-0.6f,0.6f);
 
 unsigned int backgroundVBO=NULL, backgroundVAO=NULL, backgroundEBO=NULL;
 unsigned int startButtonVBO = NULL, startButtonVAO = NULL, startButtonEBO = NULL;
 unsigned int helpButtonVBO = NULL, helpButtonVAO = NULL, helpButtonEBO = NULL;
 unsigned int exitButtonVBO = NULL, exitButtonVAO = NULL, exitButtonEBO = NULL;
+unsigned int backButtonVBO = NULL, backButtonVAO = NULL, backButtonEBO = NULL;

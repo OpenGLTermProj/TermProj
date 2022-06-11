@@ -85,10 +85,12 @@ int main(int argc, char** argv)
 // -------------
 	unsigned int cubeTexture = loadTexture(FileSystem::getPath("resources/textures/container.jpg").c_str());
 	unsigned int backgroundTexture = loadTexture(FileSystem::getPath("resources/textures/joker_with_letter.jpg").c_str());
+	unsigned int lobbyHelpTexture = loadTexture(FileSystem::getPath("resources/textures/jokerHelp.jpg").c_str());
 	unsigned int buttonTexture = loadTexture(FileSystem::getPath("resources/textures/button.jpg").c_str());
 	unsigned int buttonStartTexture = loadTexture(FileSystem::getPath("resources/textures/startButton.jpg").c_str());
 	unsigned int buttonHelpTexture = loadTexture(FileSystem::getPath("resources/textures/helpButton.jpg").c_str());
 	unsigned int buttonExitTexture = loadTexture(FileSystem::getPath("resources/textures/exitButton.jpg").c_str());
+	unsigned int buttonBackTexture = loadTexture(FileSystem::getPath("resources/textures/backButton.jpg").c_str());
 
 
 
@@ -112,11 +114,12 @@ int main(int argc, char** argv)
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
+
 	load2D(Vertices::Start, startButtonVBO, startButtonVAO, startButtonEBO);
 	load2D(Vertices::Background, backgroundVBO, backgroundVAO, backgroundEBO);
 	load2D(Vertices::Help, helpButtonVBO, helpButtonVAO, helpButtonEBO);
 	load2D(Vertices::Exit, exitButtonVBO, exitButtonVAO, exitButtonEBO);
-	
+	load2D(Vertices::Back, backButtonVBO, backButtonVAO, backButtonEBO);
 	//load2D(cubeVertices, cubeVBO, cubeVAO, cubeEBO);
 
 	
@@ -134,7 +137,6 @@ int main(int argc, char** argv)
 		float currentFrame = static_cast<float>(glfwGetTime());
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
-
 		// input
 		// -----
 		processInput(window);
@@ -144,12 +146,11 @@ int main(int argc, char** argv)
 		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
 		switch (gameState)
 		{
 		case State::Lobby:
 		{
-
+			
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 			lobbyShader.use();
 	
@@ -176,6 +177,32 @@ int main(int argc, char** argv)
 			RenderText(textShader, debug1, 25.0f, 25.0f, 0.5f, glm::vec3(0.5, 0.8f, 0.2f));
 			RenderText(textShader, debug2, 25.0f, 50.0f, 0.5f, glm::vec3(0.5, 0.8f, 0.2f));
 			RenderText(textShader, debug3, 25.0f, 75.0f, 0.5f, glm::vec3(0.5, 0.8f, 0.2f));
+
+			break;
+		}
+		case State::LobbyHelp:
+		{
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+			lobbyShader.use();
+			glBindTexture(GL_TEXTURE_2D, lobbyHelpTexture);
+			glBindVertexArray(backgroundVAO);
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+			buttonSelected == MousePos::BackButton ? glBindTexture(GL_TEXTURE_2D, buttonBackTexture) : glBindTexture(GL_TEXTURE_2D, buttonTexture);
+			glBindVertexArray(backButtonVAO);
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+			string help1 = string_format("1. Find Joker Card");
+			string help2 = string_format("2. Flip Cards using Clown's Hammering");
+			string help3 = string_format("3. Move Character with W, A, S, D");
+			string help4 = string_format("4. Find Joker in 3 times");
+			string help5 = string_format("p.s. Hope you good luck");
+
+			RenderText(textShader, help1, 150.0f, 500.0f, 1.25f, glm::vec3(1.0, 0.0f, 0.0f));
+			RenderText(textShader, help2, 150.0f, 425.0f, 1.25f, glm::vec3(1.0, 0.0f, 0.0f));
+			RenderText(textShader, help3, 150.0f, 350.0f, 1.25f, glm::vec3(1.0, 0.0f, 0.0f));
+			RenderText(textShader, help4, 150.0f, 275.0f, 1.25f, glm::vec3(1.0, 0.0f, 0.0f));
+			RenderText(textShader, help5, 150.0f, 150.0f, 1.0f, glm::vec3(1.0, 0.0f, 0.0f));
 
 			break;
 		}
