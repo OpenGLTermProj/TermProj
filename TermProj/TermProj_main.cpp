@@ -208,69 +208,39 @@ int main(int argc, char** argv)
 		}
 		case State::InGame:
 		{
-				lightingShader.use();
-		//lightingShader.setVec3("light.position", glm::vec3(card[selectCard].x, 0.5, card[selectCard].z));
-		lightingShader.setVec3("light.position", glm::vec3(0, 3, 0));
-		lightingShader.setVec3("light.direction", glm::vec3(0, -1, 0));
-		lightingShader.setFloat("light.cutOff", glm::cos(glm::radians(90.f)));
-		lightingShader.setVec3("viewPos", camera.Position);
+			lightingShader.use();
+			//lightingShader.setVec3("light.position", glm::vec3(card[selectCard].x, 0.5, card[selectCard].z));
+			lightingShader.setVec3("light.position", glm::vec3(0, 3, 0));
+			lightingShader.setVec3("light.direction", glm::vec3(0, -1, 0));
+			lightingShader.setFloat("light.cutOff", glm::cos(glm::radians(90.f)));
+			lightingShader.setVec3("viewPos", camera.Position);
 
-		// light properties
-		lightingShader.setVec3("light.ambient", 0.1f, 0.1f, 0.1f);
-		// we configure the diffuse intensity slightly higher; the right lighting conditions differ with each lighting method and environment.
-		// each environment and lighting type requires some tweaking to get the best out of your environment.
-		lightingShader.setVec3("light.diffuse", 0.8f, 0.8f, 0.8f);
-		lightingShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
-		lightingShader.setFloat("light.constant", 1.0f);
-		lightingShader.setFloat("light.linear", 0.09f);
-		lightingShader.setFloat("light.quadratic", 0.032f);
+			// light properties
+			lightingShader.setVec3("light.ambient", 0.1f, 0.1f, 0.1f);
+			// we configure the diffuse intensity slightly higher; the right lighting conditions differ with each lighting method and environment.
+			// each environment and lighting type requires some tweaking to get the best out of your environment.
+			lightingShader.setVec3("light.diffuse", 0.8f, 0.8f, 0.8f);
+			lightingShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
+			lightingShader.setFloat("light.constant", 1.0f);
+			lightingShader.setFloat("light.linear", 0.09f);
+			lightingShader.setFloat("light.quadratic", 0.032f);
 
-		// material properties
-		lightingShader.setFloat("material.shininess", 32.0f);
-
-		// view/projection transformations
-		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.01f, 100.0f);
-		glm::mat4 view = camera.GetViewMatrix();
-		lightingShader.setMat4("projection", projection);
-		lightingShader.setMat4("view", view);
-
-		// world transformation
-		glm::mat4 model = glm::mat4(1.0f);
-		lightingShader.setMat4("model", model);
-
-			
-			// don't forget to enable shader before setting uniforms
-			tableShader.use();
+			// material properties
+			lightingShader.setFloat("material.shininess", 32.0f);
 
 			// view/projection transformations
-			projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.01f, 100.0f);
-			view = camera.GetViewMatrix();
-			tableShader.setMat4("projection", projection);
-			tableShader.setMat4("view", view);
+			glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.01f, 100.0f);
+			glm::mat4 view = camera.GetViewMatrix();
+			lightingShader.setMat4("projection", projection);
+			lightingShader.setMat4("view", view);
 
-			// render the loaded model
-			model = glm::mat4(1.0f);
-			model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-			model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
-			tableShader.setMat4("model", model);
+			// world transformation
+			glm::mat4 model = glm::mat4(1.0f);
+			lightingShader.setMat4("model", model);
+
+			lightingShader.setMat4("model", model);
 			table.Draw(lightingShader);
 
-			// render the joker card
-			jCardShader.use();
-			jCardShader.setMat4("projection", projection);
-			jCardShader.setMat4("view", view);
-			model = glm::mat4(1.0f);
-			model = glm::translate(model, card[jokerIndex]); // translate it down so it's at the center of the scene
-			model = glm::rotate(model, glm::radians(cAngle[jokerIndex]), glm::vec3(0, 1, 0));
-			model = glm::rotate(model, glm::radians(-90.f), glm::vec3(1, 0, 0));
-			model = glm::scale(model, glm::vec3(0.025f, 0.025f, 0.025f));	// it's a bit too big for our scene, so scale it down
-			jCardShader.setMat4("model", model);
-			jCard.Draw(lightingShader);
-
-			// render the empty card
-			eCardShader.use();
-			eCardShader.setMat4("projection", projection);
-			eCardShader.setMat4("view", view);
 			for (int i = 0; i < 7; i++)
 			{
 				if (selected[i] == 0)
