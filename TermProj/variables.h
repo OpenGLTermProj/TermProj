@@ -12,7 +12,24 @@
 #ifndef VARIABLES_H
 #define VARIABLES_H
 
-extern unsigned int cubeVAO, cubeVBO;
+
+extern enum State:short
+{
+	Lobby =0,
+	InGame,
+	End
+
+};
+
+extern enum Vertices : short 
+{
+	Background=0,
+	Start,
+	Help,
+	Exit
+};
+
+extern State gameState;
 
 extern Shader textShader;
 extern Shader textShader;
@@ -76,16 +93,17 @@ extern unsigned int VAO, VBO;
 // ------------------------------------------------------------------
 extern float cubeVertices[180];
 extern float backgroundVertices[32];
+extern float startButtonVertices[32];
+extern float helpButtonVertices[32];
+extern float exitButtonVertices[32];
 extern unsigned int boxIndices[6];
 
+extern unsigned int backgroundVBO, backgroundVAO, backgroundEBO;
+extern unsigned int startButtonVBO, startButtonVAO, startButtonEBO;
+extern unsigned int helpButtonVBO, helpButtonVAO, helpButtonEBO;
+extern unsigned int exitButtonVBO, exitButtonVAO, exitButtonEBO;
+extern unsigned int cubeVAO, cubeVBO, cubeEBO;
+
+
+
 #endif
-
-extern enum State
-{
-	Lobby,
-	InGame,
-	End
-
-};
-
-extern State gameState;

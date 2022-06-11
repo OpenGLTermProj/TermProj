@@ -61,6 +61,8 @@ extern int initText();
 
 extern void renderUI();
 
+extern void load2D(Vertices vertex, unsigned int& VBO, unsigned int& VAO, unsigned int& EBO);
+
 
 
 #endif // !FUNCTIONS_H

@@ -449,6 +449,51 @@ void renderUI()
 
 }
 
+
+void load2D(Vertices vertex, unsigned int& VBO, unsigned int& VAO, unsigned int& EBO)
+{
+
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+	glGenBuffers(1, &EBO);
+
+	glBindVertexArray(VAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	switch (vertex)
+	{
+	case Vertices::Background:
+		glBufferData(GL_ARRAY_BUFFER, sizeof(backgroundVertices), backgroundVertices, GL_STATIC_DRAW);
+		break;
+	case Vertices::Start:
+		glBufferData(GL_ARRAY_BUFFER, sizeof(startButtonVertices), startButtonVertices, GL_STATIC_DRAW);
+		break;
+	case Vertices::Help:
+		glBufferData(GL_ARRAY_BUFFER, sizeof(helpButtonVertices), helpButtonVertices, GL_STATIC_DRAW);
+		break;
+	case Vertices::Exit:
+		glBufferData(GL_ARRAY_BUFFER, sizeof(exitButtonVertices), exitButtonVertices, GL_STATIC_DRAW);
+		break;
+	default:
+		break;
+	}
+	
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(boxIndices), boxIndices, GL_STATIC_DRAW);
+
+	// position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	// color attribute
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+	// texture coord attribute
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glEnableVertexAttribArray(2);
+}
+
+
 #pragma region Text
 template<typename ... Args>
 std::string string_format(const std::string& format, Args ... args)

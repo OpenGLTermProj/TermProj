@@ -76,7 +76,7 @@ int main(int argc, char** argv)
 	Shader eCardShader("shader/emptycard.vs", "shader/emptycard.fs");
 	Shader cubeShader("shader/cube.vs", "shader/cube.fs");
 	Shader lightingShader("shader/light_casters.vs", "shader/light_casters.fs");
-	Shader ourShader("shader/lobby.vs", "shader/lobby.fs");
+	Shader lobbyShader("shader/lobby.vs", "shader/lobby.fs");
 	lightingShader.use();
 	lightingShader.setInt("material.diffuse", 0);
 	lightingShader.setInt("material.specular", 1);
@@ -85,6 +85,8 @@ int main(int argc, char** argv)
 // -------------
 	unsigned int cubeTexture = loadTexture(FileSystem::getPath("resources/textures/container.jpg").c_str());
 	unsigned int backgroundTexture = loadTexture(FileSystem::getPath("resources/textures/joker_with_letter.jpg").c_str());
+	unsigned int buttonTexture = loadTexture(FileSystem::getPath("resources/textures/button.jpg").c_str());
+
 
 
 	// load models
@@ -109,29 +111,9 @@ int main(int argc, char** argv)
 	glEnableVertexAttribArray(1);
 
 	
-	unsigned int backgroundVBO, backgroundVAO, backgroundEBO;
-	glGenVertexArrays(1, &backgroundVAO);
-	glGenBuffers(1, &backgroundVBO);
-	glGenBuffers(1, &backgroundEBO);
+	//load2D(cubeVertices, cubeVBO, cubeVAO, cubeEBO);
 
-	glBindVertexArray(backgroundVAO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, backgroundVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(backgroundVertices), backgroundVertices, GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, backgroundEBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(boxIndices), boxIndices, GL_STATIC_DRAW);
-
-	// position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-	// color attribute
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-	// texture coord attribute
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-	glEnableVertexAttribArray(2);
-
+	
 
 	// draw in wireframe
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -161,17 +143,29 @@ int main(int argc, char** argv)
 		{
 		case State::Lobby:
 		{
+
+			load2D(Vertices::Start, startButtonVBO, startButtonVAO, startButtonEBO);
+			load2D(Vertices::Background, backgroundVBO, backgroundVAO, backgroundEBO);
+			load2D(Vertices::Help, helpButtonVBO, helpButtonVAO, helpButtonEBO);
+			load2D(Vertices::Exit, exitButtonVBO, exitButtonVAO, exitButtonEBO);
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-
+			lobbyShader.use();
+	
 			glBindTexture(GL_TEXTURE_2D, backgroundTexture);
-			ourShader.use();
-			glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.01f, 100.0f);
-			glm::mat4 view = camera.GetViewMatrix();
-
 			glBindVertexArray(backgroundVAO);
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-			
 
+			glBindTexture(GL_TEXTURE_2D, buttonTexture);
+			glBindVertexArray(startButtonVAO);
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT,0);
+
+			glBindTexture(GL_TEXTURE_2D, buttonTexture);
+			glBindVertexArray(helpButtonVAO);
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+			glBindTexture(GL_TEXTURE_2D, buttonTexture);
+			glBindVertexArray(exitButtonVAO);
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 			string debug1 = string_format(" Mouse X : %f  Mouse Y : %f", lastX, lastY);
 			string debug2 = string_format("Front : %f, %f, %f | Position : %f, %f, %f | Yaw : %f | Pitch : %f", camera.Front[0], camera.Front[1], camera.Front[2],
@@ -379,4 +373,3 @@ std::string string_format(const std::string& format, Args ... args)
 	return std::string(buf.get(), buf.get() + size - 1); // We don't want the '\0' inside
 }
 #pragma endregion
-

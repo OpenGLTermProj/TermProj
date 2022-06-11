@@ -37,8 +37,8 @@ float hAngle[3] = { 0, };
 
 
 // settings
-const unsigned int SCR_WIDTH = 1980;
-const unsigned int SCR_HEIGHT = 1080;
+const unsigned int SCR_WIDTH = 1366;
+const unsigned int SCR_HEIGHT = 768;
 
 // camera
 Camera camera(glm::vec3(0.0f, 0.5f, -0.5f), glm::vec3(0.f, 1.f, 0.f), 90.f, -35.f);
@@ -52,7 +52,7 @@ float lastFrame = 0.0f;
 
  std::map<GLchar, Character> Characters;
 unsigned int VAO, VBO;
-unsigned int cubeVAO, cubeVBO;
+unsigned int cubeVAO, cubeVBO, cubeEBO;
 unsigned int cubeTexture;
 
 State gameState = State::Lobby;
@@ -73,10 +73,26 @@ unsigned int boxIndices[] = {
 
 float startButtonVertices[] = {
 	// positions          // colors           // texture coords
-	 -0.5f,  -0.5f, 0.1f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-	 -0.5f, -0.7f, 0.1f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-	-0.7f, -0.7f, 0.09f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-	-0.7f,  -0.5f, 0.09f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
+	 -0.8f,  -0.4f, 0.08f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+	 -0.8f, -0.8f, 0.08f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+	-0.4f, -0.8f, 0.08f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+	-0.4f,  -0.4f, 0.08f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
+};
+
+float helpButtonVertices[] = {
+	// positions          // colors           // texture coords
+	 -0.2f,  -0.4f, 0.08f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+	 -0.2f, -0.8f, 0.08f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+	0.2f, -0.8f, 0.08f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+	0.2f,  -0.4f, 0.08f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
+};
+
+float exitButtonVertices[] = {
+	// positions          // colors           // texture coords
+	 0.4f,  -0.4f, 0.08f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+	 0.4f, -0.8f, 0.08f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+	0.8f, -0.8f, 0.08f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+	0.8f,  -0.4f, 0.08f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
 };
 
 extern float cubeVertices[] = {
@@ -123,3 +139,8 @@ extern float cubeVertices[] = {
 	-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
 	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 };
+
+unsigned int backgroundVBO=NULL, backgroundVAO=NULL, backgroundEBO=NULL;
+unsigned int startButtonVBO = NULL, startButtonVAO = NULL, startButtonEBO = NULL;
+unsigned int helpButtonVBO = NULL, helpButtonVAO = NULL, helpButtonEBO = NULL;
+unsigned int exitButtonVBO = NULL, exitButtonVAO = NULL, exitButtonEBO = NULL;
