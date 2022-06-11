@@ -62,6 +62,7 @@ unsigned int VAO, VBO;
 unsigned int cubeVAO, cubeVBO, cubeEBO;
 unsigned int cubeTexture;
 
+vector<std::string> faces;
 
 
 float backgroundVertices[] = {
@@ -156,7 +157,50 @@ float cubeVertices[] = {
 	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 };
 
+float skyboxVertices[] = {
+	// positions          
+	-0.5f,  0.5f, -0.5f,
+	-0.5f, -0.5f, -0.5f,
+	 0.5f, -0.5f, -0.5f,
+	 0.5f, -0.5f, -0.5f,
+	 0.5f,  0.5f, -0.5f,
+	-0.5f,  0.5f, -0.5f,
 
+	-0.5f, -0.5f,  0.5f,
+	-0.5f, -0.5f, -0.5f,
+	-0.5f,  0.5f, -0.5f,
+	-0.5f,  0.5f, -0.5f,
+	-0.5f,  0.5f,  0.5f,
+	-0.5f, -0.5f,  0.5f,
+
+	 0.5f, -0.5f, -0.5f,
+	 0.5f, -0.5f,  0.5f,
+	 0.5f,  0.5f,  0.5f,
+	 0.5f,  0.5f,  0.5f,
+	 0.5f,  0.5f, -0.5f,
+	 0.5f, -0.5f, -0.5f,
+
+	-0.5f, -0.5f,  0.5f,
+	-0.5f,  0.5f,  0.5f,
+	 0.5f,  0.5f,  0.5f,
+	 0.5f,  0.5f,  0.5f,
+	 0.5f, -0.5f,  0.5f,
+	-0.5f, -0.5f,  0.5f,
+
+	-0.5f,  0.5f, -0.5f,
+	 0.5f,  0.5f, -0.5f,
+	 0.5f,  0.5f,  0.5f,
+	 0.5f,  0.5f,  0.5f,
+	-0.5f,  0.5f,  0.5f,
+	-0.5f,  0.5f, -0.5f,
+
+	-0.5f, -0.5f, -0.5f,
+	-0.5f, -0.5f,  0.5f,
+	 0.5f, -0.5f, -0.5f,
+	 0.5f, -0.5f, -0.5f,
+	-0.5f, -0.5f,  0.5f,
+	 0.5f, -0.5f,  0.5f
+};
 
 glm::vec2 startButtonPosition= glm::vec2(-0.6f, -0.6f);
 glm::vec2 helpButtonPosition= glm::vec2(0.0f, -0.6f);
@@ -168,3 +212,4 @@ unsigned int startButtonVBO = NULL, startButtonVAO = NULL, startButtonEBO = NULL
 unsigned int helpButtonVBO = NULL, helpButtonVAO = NULL, helpButtonEBO = NULL;
 unsigned int exitButtonVBO = NULL, exitButtonVAO = NULL, exitButtonEBO = NULL;
 unsigned int backButtonVBO = NULL, backButtonVAO = NULL, backButtonEBO = NULL;
+unsigned int skyboxVBO = NULL, skyboxVAO = NULL;

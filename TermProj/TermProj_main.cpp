@@ -77,9 +77,20 @@ int main(int argc, char** argv)
 	Shader cubeShader("shader/cube.vs", "shader/cube.fs");
 	Shader lightingShader("shader/light_casters.vs", "shader/light_casters.fs");
 	Shader lobbyShader("shader/lobby.vs", "shader/lobby.fs");
+	Shader skyboxShader("shader/skybox.vs", "shader/skybox.fs");
 	lightingShader.use();
 	lightingShader.setInt("material.diffuse", 0);
 	lightingShader.setInt("material.specular", 1);
+
+	vector<std::string> faces =
+	{
+		FileSystem::getPath("resources/textures/skybox/right.jpg"),
+		FileSystem::getPath("resources/textures/skybox/left.jpg"),
+		FileSystem::getPath("resources/textures/skybox/top.jpg"),
+		FileSystem::getPath("resources/textures/skybox/bottom.jpg"),
+		FileSystem::getPath("resources/textures/skybox/front.jpg"),
+		FileSystem::getPath("resources/textures/skybox/back.jpg")
+	};
 
 	// load textures
 // -------------
@@ -91,8 +102,8 @@ int main(int argc, char** argv)
 	unsigned int buttonHelpTexture = loadTexture(FileSystem::getPath("resources/textures/helpButton.jpg").c_str());
 	unsigned int buttonExitTexture = loadTexture(FileSystem::getPath("resources/textures/exitButton.jpg").c_str());
 	unsigned int buttonBackTexture = loadTexture(FileSystem::getPath("resources/textures/backButton.jpg").c_str());
-
-
+	unsigned int cubemapTexture = loadCubemap(faces);
+	
 
 	// load models
 	// -----------
@@ -120,9 +131,12 @@ int main(int argc, char** argv)
 	load2D(Vertices::Help, helpButtonVBO, helpButtonVAO, helpButtonEBO);
 	load2D(Vertices::Exit, exitButtonVBO, exitButtonVAO, exitButtonEBO);
 	load2D(Vertices::Back, backButtonVBO, backButtonVAO, backButtonEBO);
+
+	loadSkybox(Vertices::Skybox, skyboxVBO, skyboxVAO);
 	//load2D(cubeVertices, cubeVBO, cubeVAO, cubeEBO);
 
-	
+	skyboxShader.use();
+	skyboxShader.setInt("skybox", 0);
 
 	// draw in wireframe
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -241,6 +255,26 @@ int main(int argc, char** argv)
 			lightingShader.setMat4("model", model);
 			table.Draw(lightingShader);
 
+<<<<<<< HEAD
+=======
+			// render the joker card
+			jCardShader.use();
+			jCardShader.setMat4("projection", projection);
+			jCardShader.setMat4("view", view);
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, card[jokerIndex]); // translate it down so it's at the center of the scene
+			model = glm::rotate(model, glm::radians(cAngle[jokerIndex]), glm::vec3(0, 1, 0));
+			model = glm::rotate(model, glm::radians(-90.f), glm::vec3(1, 0, 0));
+			model = glm::scale(model, glm::vec3(0.025f, 0.025f, 0.025f));	// it's a bit too big for our scene, so scale it down
+			jCardShader.setMat4("model", model);
+			jCard.Draw(lightingShader);
+
+			// render the empty card
+			eCardShader.use();
+			eCardShader.setMat4("projection", projection);
+			eCardShader.setMat4("view", view);
+			lightingShader.use();
+>>>>>>> 0afc541 (add skybox)
 			for (int i = 0; i < 7; i++)
 			{
 				if (selected[i] == 0)
@@ -325,7 +359,6 @@ int main(int argc, char** argv)
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 			glBindVertexArray(0);
 
-
 			string debug1 = string_format("Front : %f, %f, %f | Position : %f, %f, %f | Yaw : %f | Pitch : %f", camera.Front[0], camera.Front[1], camera.Front[2],
 				camera.Position[0], camera.Position[1], camera.Position[2], camera.Yaw, camera.Pitch);
 			string debug2 = string_format("Model Position | %f, %f, %f | Angle %f", player[0], player[1], player[2], pAngle);
@@ -334,7 +367,21 @@ int main(int argc, char** argv)
 			RenderText(textShader, debug1, 25.0f, 25.0f, 0.3f, glm::vec3(0.5, 0.8f, 0.2f));
 			RenderText(textShader, debug2, 25.0f, 50.0f, 0.3f, glm::vec3(0.5, 0.8f, 0.2f));
 			RenderText(textShader, to_string(currentFrame), 25.0f, 75.0f, 0.3f, glm::vec3(0.5, 0.8f, 0.2f));
-			RenderText(textShader, hud, 25.0f, 720.0f, 0.7f, glm::vec3(0.5, 0.8f, 0.2f));
+			RenderText(textShader, hud, 25.0f, 650.0f, 1.25f, glm::vec3(1.0f, 0.0f, 0.0f));
+
+			glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
+			skyboxShader.use();
+			projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+			view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
+			skyboxShader.setMat4("view", view);
+			skyboxShader.setMat4("projection", projection);
+			// skybox cube
+			glBindVertexArray(skyboxVAO);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+			glBindVertexArray(0);
+			glDepthFunc(GL_LESS); // set depth function back to default
 			break;
 		}
 		case State::End:

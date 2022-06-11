@@ -63,6 +63,8 @@ extern void renderUI();
 
 extern void load2D(Vertices vertex, unsigned int& VBO, unsigned int& VAO, unsigned int& EBO);
 
+extern void loadSkybox(Vertices vertex, unsigned int& VBO, unsigned int& VAO);
 
+extern unsigned int loadCubemap(vector<std::string> faces);
 
 #endif // !FUNCTIONS_H

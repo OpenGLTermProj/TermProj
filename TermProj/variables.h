@@ -28,7 +28,8 @@ extern enum Vertices : short
 	Start,
 	Help,
 	Back,
-	Exit
+	Exit,
+	Skybox
 };
 
 extern enum MousePos : short
@@ -97,6 +98,9 @@ struct Character {
 	glm::ivec2   Bearing;   // Offset from baseline to left/top of glyph
 	unsigned int Advance;   // Horizontal offset to advance to next glyph
 };
+
+extern vector<std::string> faces;
+
 extern std::map<GLchar, Character> Characters;
 extern unsigned int VAO, VBO;
 #pragma endregion
@@ -109,6 +113,7 @@ extern float startButtonVertices[32];
 extern float helpButtonVertices[32];
 extern float exitButtonVertices[32];
 extern float backButtonVertices[32];
+extern float skyboxVertices[108];
 extern unsigned int boxIndices[6];
 
 extern glm::vec2 startButtonPosition;
@@ -121,6 +126,7 @@ extern unsigned int startButtonVBO, startButtonVAO, startButtonEBO;
 extern unsigned int helpButtonVBO, helpButtonVAO, helpButtonEBO;
 extern unsigned int exitButtonVBO, exitButtonVAO, exitButtonEBO;
 extern unsigned int backButtonVBO, backButtonVAO, backButtonEBO;
+extern unsigned int skyboxVBO, skyboxVAO;
 extern unsigned int cubeVAO, cubeVBO, cubeEBO;
 
 
