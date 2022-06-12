@@ -80,6 +80,7 @@ int main(int argc, char** argv)
 	Shader cubeShader("shader/cube.vs", "shader/cube.fs");
 	Shader lightingShader("shader/multiple_lights.vs", "shader/multiple_lights.fs");
 	Shader lobbyShader("shader/lobby.vs", "shader/lobby.fs");
+	Shader animShader("shader/anim_model.vs", "shader/anim_model.fs");
 	lightingShader.use();
 	lightingShader.setInt("material.diffuse", 0);
 	lightingShader.setInt("material.specular", 1);
@@ -148,6 +149,7 @@ int main(int argc, char** argv)
 		// ------
 		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		
 
 		switch (gameState)
 		{
@@ -211,6 +213,26 @@ int main(int argc, char** argv)
 		}
 		case State::InGame:
 		{
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			animShader.use();
+			glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.01f, 100.0f);
+			glm::mat4  view = camera.GetViewMatrix();
+
+
+			animShader.setMat4("projection", projection);
+			animShader.setMat4("view", view);
+			// material properties
+			auto transforms = animator.GetFinalBoneMatrices();
+			for (int i = 0; i < transforms.size(); ++i)
+				animShader.setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
+
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::rotate(model, glm::radians(180.f), glm::vec3(0.0f, 1.0f, 0.0f));
+			model = glm::translate(model, glm::vec3(0.0f, -0.2f, -0.5f)); // translate it down so it's at the center of the scene
+			model = glm::scale(model, glm::vec3(.3f, .3f, .3f));
+			animShader.setMat4("model", model);
+
+			clown.Draw(animShader);
 			lightingShader.use();
 			lightingShader.setVec3("viewPos", camera.Position);
 			lightingShader.setFloat("material.shininess", 32.0f);
@@ -245,30 +267,24 @@ int main(int argc, char** argv)
 			lightingShader.setFloat("material.shininess", 32.0f);
 
 			// view/projection transformations
-			glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.01f, 100.0f);
-			glm::mat4 view = camera.GetViewMatrix();
+			
+			lightingShader.setMat4("projection", projection);
+			lightingShader.setMat4("view", view);
+
+			
+			// view/projection transformations
+			projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.01f, 100.0f);
+			 view = camera.GetViewMatrix();
 			lightingShader.setMat4("projection", projection);
 			lightingShader.setMat4("view", view);
 
 			// world transformation
-			glm::mat4 model = glm::mat4(1.0f);
+			 model = glm::mat4(1.0f);
 			model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
 			model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
 			lightingShader.setMat4("model", model);
 			table.Draw(lightingShader);
 
-			
-			auto transforms = animator.GetFinalBoneMatrices();
-			for (int i = 0; i < transforms.size(); ++i)
-				lightingShader.setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
-		
-			model = glm::mat4(1.0f);
-			model = glm::translate(model, joker); // translate it down so it's at the center of the scene
-			model = glm::scale(model, glm::vec3(0.003f, 0.003f, 0.003f)); 
-			model = glm::rotate(model,glm::radians(180.f), glm::vec3(0, 1, 0));
-			lightingShader.setMat4("model", model);
-		
-			clown.Draw(lightingShader);
 
 			for (int i = 0; i < 7; i++)
 			{

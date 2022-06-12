@@ -7,7 +7,7 @@
 
 const char* logl_root = "C:/repo/TermProj";
 
-State gameState = State::Lobby;
+State gameState = State::InGame;
 MousePos buttonSelected = MousePos::Idle;
 
 Model jCard;

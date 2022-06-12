@@ -17,10 +17,12 @@ const int MAX_BONE_INFLUENCE = 4;
 uniform mat4 finalBonesMatrices[MAX_BONES];
 
 out vec2 TexCoords;
+out vec3 FragPos;
+out vec3 Normal;
 
 void main()
 {
-    vec4 totalPosition = vec4(0.0f);
+   vec4 totalPosition = vec4(0.0f);
     for(int i = 0 ; i < MAX_BONE_INFLUENCE ; i++)
     {
         if(boneIds[i] == -1) 
