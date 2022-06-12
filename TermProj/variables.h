@@ -104,6 +104,7 @@ extern int selectCard ;
 extern int selected[7];
 extern int heart;
 extern bool jokerCardFound;
+extern int stage;
 
 // debug
 extern float hAngle[3];

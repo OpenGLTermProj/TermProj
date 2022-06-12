@@ -184,13 +184,13 @@ int main(int argc, char** argv)
 			glBindVertexArray(exitButtonVAO);
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-			string debug1 = string_format(" Mouse X : %f  Mouse Y : %f", lastX, lastY);
+			/*string debug1 = string_format(" Mouse X : %f  Mouse Y : %f", lastX, lastY);
 			string debug2 = string_format("Front : %f, %f, %f | Position : %f, %f, %f | Yaw : %f | Pitch : %f", camera.Front[0], camera.Front[1], camera.Front[2],
 				camera.Position[0], camera.Position[1], camera.Position[2], camera.Yaw, camera.Pitch);
 			string debug3 = string_format(" Mouse nomal X : %f  Mouse  nomal Y : %f", syncedX, syncedY);
 			RenderText(textShader, debug1, 25.0f, 25.0f, 0.5f, glm::vec3(0.5, 0.8f, 0.2f));
 			RenderText(textShader, debug2, 25.0f, 50.0f, 0.5f, glm::vec3(0.5, 0.8f, 0.2f));
-			RenderText(textShader, debug3, 25.0f, 75.0f, 0.5f, glm::vec3(0.5, 0.8f, 0.2f));
+			RenderText(textShader, debug3, 25.0f, 75.0f, 0.5f, glm::vec3(0.5, 0.8f, 0.2f));*/
 			
 			break;
 		}
@@ -513,14 +513,14 @@ int main(int argc, char** argv)
 
 			
 
-			string debug1 = string_format("Front : %f, %f, %f | Position : %f, %f, %f | Yaw : %f | Pitch : %f", camera.Front[0], camera.Front[1], camera.Front[2],
+			/*string debug1 = string_format("Front : %f, %f, %f | Position : %f, %f, %f | Yaw : %f | Pitch : %f", camera.Front[0], camera.Front[1], camera.Front[2],
 				camera.Position[0], camera.Position[1], camera.Position[2], camera.Yaw, camera.Pitch);
-			string debug2 = string_format("Model Position | %f, %f, %f | Angle %f | IsGround : %d", player[0], player[1], player[2], pAngle, isGround);
+			string debug2 = string_format("Model Position | %f, %f, %f | Angle %f | IsGround : %d", player[0], player[1], player[2], pAngle, isGround);*/
 			string hud = string_format("Life : %d", heart);
 
-			RenderText(textShader, debug1, 25.0f, 25.0f, 0.3f, glm::vec3(0.5, 0.8f, 0.2f));
-			RenderText(textShader, debug2, 25.0f, 50.0f, 0.3f, glm::vec3(0.5, 0.8f, 0.2f));
-			RenderText(textShader, to_string(currentFrame), 25.0f, 75.0f, 0.3f, glm::vec3(0.5, 0.8f, 0.2f));
+			/*RenderText(textShader, debug1, 25.0f, 25.0f, 0.3f, glm::vec3(0.5, 0.8f, 0.2f));
+			RenderText(textShader, debug2, 25.0f, 50.0f, 0.3f, glm::vec3(0.5, 0.8f, 0.2f));*/
+			RenderText(textShader, to_string(currentFrame), 25.0f, 25.0f, 0.3f, glm::vec3(0.5, 0.8f, 0.2f));
 			RenderText(textShader, hud, 25.0f, 650.0f, 1.25f, glm::vec3(1.0f, 0.0f, 0.0f));
 
 			if (sequence == GameSequence::Ready)
@@ -530,8 +530,11 @@ int main(int argc, char** argv)
 					sequenceStartTime = static_cast<float>(glfwGetTime());;
 					
 				}
-				if( currentFrame - sequenceStartTime <= 1 )
-					RenderText(textShader, "Ready", SCR_WIDTH/2-150.0f, SCR_HEIGHT/2-75.0f, 3.0f, glm::vec3(0.5, 0.8f, 0.2f));
+				if (currentFrame - sequenceStartTime <= 1) {
+
+					string info = string_format("Stage %d", stage);
+					RenderText(textShader, info, SCR_WIDTH / 2 - 175.0f, SCR_HEIGHT / 2 - 75.0f, 3.0f, glm::vec3(0.5, 0.8f, 0.2f));
+				}
 				else if (currentFrame - sequenceStartTime <= 2 )
 					RenderText(textShader, "Start!", SCR_WIDTH / 2 - 150.0f, SCR_HEIGHT / 2 - 75.0f, 3.0f, glm::vec3(0.5, 0.8f, 0.2f));
 				else {
@@ -544,11 +547,11 @@ int main(int argc, char** argv)
 			if (sequence == GameSequence::CountDown)
 			{
 				if (currentFrame - sequenceStartTime  <= 1)
-					RenderText(textShader, "3", SCR_WIDTH / 2 - .01f *SCR_WIDTH, SCR_HEIGHT / 2 + 0.14f * SCR_WIDTH, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
+					RenderText(textShader, "3", SCR_WIDTH / 2 - .01f *SCR_WIDTH, SCR_HEIGHT / 2 + 0.14f * SCR_WIDTH, 1.0f, glm::vec3(1, 0.0f, 0.0f));
 				else if (currentFrame - sequenceStartTime  <= 2)
-					RenderText(textShader, "2", SCR_WIDTH / 2 - .01f * SCR_WIDTH, SCR_HEIGHT / 2 + 0.14f * SCR_WIDTH, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
+					RenderText(textShader, "2", SCR_WIDTH / 2 - .01f * SCR_WIDTH, SCR_HEIGHT / 2 + 0.14f * SCR_WIDTH, 1.0f, glm::vec3(1, 0.0f, 0.0f));
 				else if (currentFrame - sequenceStartTime  <= 3)
-					RenderText(textShader, "1!", SCR_WIDTH / 2 - .01f * SCR_WIDTH, SCR_HEIGHT / 2 + 0.14f * SCR_WIDTH, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
+					RenderText(textShader, "1!", SCR_WIDTH / 2 - .01f * SCR_WIDTH, SCR_HEIGHT / 2 + 0.14f * SCR_WIDTH, 1.0f, glm::vec3(1, 0.0f, 0.0f));
 				else {
 					sequence = GameSequence::Hammer;
 					jokerAnimation = AnimationState::Hammering;
@@ -592,12 +595,26 @@ int main(int argc, char** argv)
 					}
 				}
 				else {
-					sequence = GameSequence::Ready;
-					gameState = State::Lobby;
-					jokerCardFound = false;
-					heart = 3;
+
+					if (jokerCardFound)
+					{
+						stage++;
+						sequence = GameSequence::Ready;
+						jokerCardFound = false;
+						heart = 3;
+
+					}
+					else {
+						gameState = State::Lobby;
+						sequence = GameSequence::Ready;
+						jokerCardFound = false;
+						stage = 1;
+						heart = 3;
+
+					}
+					camera.Position = glm::vec3(0.0f, 0.5f, -0.5f);
 					jokerIndex = rand() % 7;
-					jokerCardFound = false;
+					player = glm::vec3(0, 0.182, 0);
 					for (int i = 0; i < 7; i++)
 					{
 						selected[i] = 0;
@@ -605,6 +622,7 @@ int main(int argc, char** argv)
 						rotateAngleY[i] = 0.f;
 						rotateAngleZ[i] = cAngle[i];
 					}
+					sequenceStartTime = 0.0f;
 				}
 			}
 

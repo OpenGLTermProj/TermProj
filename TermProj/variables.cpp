@@ -49,6 +49,7 @@ int heart = 3;
 bool jokerCardFound =false;
 // debug
 float hAngle[3] = { 0, };
+int stage = 1;
 
 
 // settings
