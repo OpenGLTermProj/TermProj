@@ -70,10 +70,13 @@ int main(int argc, char** argv)
 	Model table(FileSystem::getPath("Data/table/table_final.obj"));
 	Model hammer(FileSystem::getPath("Data/hammer/hammer.obj"));
 	Model clown(FileSystem::getPath("Data/clown/Standing Melee Attack Downward.dae"));
+	Model character(FileSystem::getPath("Data/character/Running.dae"));
+	
 	Animation hammerAnimation(FileSystem::getPath("Data/clown/Standing Melee Attack Downward.dae"), &clown);
-	Animation clownIdleAnimation(FileSystem::getPath("Data/clown/idle.dae"), &clown);
+	Animation characterAnimation(FileSystem::getPath("Data/character/Running.dae"), &character);
+
 	Animator hammerAnimator(&hammerAnimation);
-	Animator clownIdleAnimator(&clownIdleAnimation);
+	Animator characterAnimator(&characterAnimation);
 
 	Shader textShader("shader/text.vs", "shader/text.fs");
 	Shader tableShader("shader/table.vs", "shader/table.fs");
@@ -83,6 +86,7 @@ int main(int argc, char** argv)
 	Shader lightingShader("shader/multiple_lights.vs", "shader/multiple_lights.fs");
 	Shader lobbyShader("shader/lobby.vs", "shader/lobby.fs");
 	Shader animShader("shader/anim_model.vs", "shader/anim_model.fs");
+	Shader characterShader("shader/anim_model.vs", "shader/anim_model.fs");
 	lightingShader.use();
 	lightingShader.setInt("material.diffuse", 0);
 	lightingShader.setInt("material.specular", 1);
@@ -132,7 +136,8 @@ int main(int argc, char** argv)
 
 	// draw in wireframe
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
+	hammerAnimator.UpdateAnimation(deltaTime);
+	characterAnimator.UpdateAnimation(deltaTime);
 	// render loop
 	// -----------
 	while (!glfwWindowShouldClose(window))
@@ -152,7 +157,7 @@ int main(int argc, char** argv)
 		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
-
+		
 		switch (gameState)
 		{
 		case State::Lobby:
@@ -218,6 +223,7 @@ int main(int argc, char** argv)
 			if (jokerAnimation == AnimationState::Hammering)
 			{
 				hammerAnimator.UpdateAnimation(deltaTime);
+				
 				if (hammerAnimator.GetCurrentTime() < jokerAnimationLastTime)
 				{
 					jokerAnimationLastTime = 0.0f;
@@ -227,9 +233,13 @@ int main(int argc, char** argv)
 					jokerAnimationLastTime = hammerAnimator.GetCurrentTime();
 				}
 			}
-			else {
-				clownIdleAnimator.UpdateAnimation(deltaTime);
+
+			if (playerAnimation == AnimationState::Running)
+			{
+				characterAnimator.UpdateAnimation(deltaTime);
+				playerAnimation = AnimationState::AniIdle;
 			}
+			
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 			animShader.use();
 			glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.01f, 100.0f);
@@ -251,6 +261,28 @@ int main(int argc, char** argv)
 			animShader.setMat4("model", model);
 
 			clown.Draw(animShader);
+
+			characterShader.use();
+			projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.01f, 100.0f);
+			view = camera.GetViewMatrix();
+
+
+			characterShader.setMat4("projection", projection);
+			characterShader.setMat4("view", view);
+			// material properties
+			auto charactertransforms = characterAnimator.GetFinalBoneMatrices();
+			for (int i = 0; i < charactertransforms.size(); ++i)
+				characterShader.setMat4("finalBonesMatrices[" + std::to_string(i) + "]", charactertransforms[i]);
+
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, player);
+			// translate it down so it's at the center of the scene
+			model = glm::scale(model, glm::vec3(.05f, .05f, .05f));
+			model = glm::rotate(model, glm::radians(pAngle+180.0f), glm::vec3(0, 1, 0));
+			characterShader.setMat4("model", model);
+
+			character.Draw(characterShader);
+
 			lightingShader.use();
 			lightingShader.setVec3("viewPos", camera.Position);
 			lightingShader.setFloat("material.shininess", 32.0f);

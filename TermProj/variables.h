@@ -60,6 +60,7 @@ extern Model jCard;
 // transition
 extern glm::vec3 jokerFacing;
 extern glm::vec3 jokerModel;
+extern glm::vec3 characterModel;
 extern glm::vec3 room;
 extern glm::vec3 joker;
 extern glm::vec3 player;

@@ -22,6 +22,7 @@ Shader cubeShader;
 
 // transition
 glm::vec3 jokerModel = glm::vec3(0.0f, -0.2f, 0.5f);
+glm::vec3 characterModel = glm::vec3(0.0f, -0.2f, 0.5f);
 glm::vec3 jokerFacing = glm::vec3(0,0,0);
 glm::vec3 room = glm::vec3(0.0, 1.3, 0);
 glm::vec3 joker = glm::vec3(0.0f, -0.15f, 0.3f);

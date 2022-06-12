@@ -338,6 +338,7 @@ void processInput(GLFWwindow* window)
 		
 		auto angle = atan2(jokerFacing.z, jokerFacing.x);
 		jokerFacingAngle = -180 * angle / PI + 90;
+		playerAnimation = AnimationState::Running;
 		
 	}
 	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
@@ -356,14 +357,21 @@ void processInput(GLFWwindow* window)
 		jokerFacing = glm::normalize(jokerFacing);
 		auto angle = atan2(jokerFacing.z, jokerFacing.x);
 		jokerFacingAngle = -180 * angle / PI+90;
+		playerAnimation = AnimationState::Running;
 	}
 	if (glfwGetKey(window, GLFW_KEY_KP_0) == GLFW_PRESS)
 		jokerAnimation = AnimationState::Hammering;
 
 	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+	{
 		pAngle += 1;
+		playerAnimation = AnimationState::Running;
+	}
 	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+	{
 		pAngle -= 1;
+		playerAnimation = AnimationState::Running;
+	}
 
 	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
 		player[1] += speed;
