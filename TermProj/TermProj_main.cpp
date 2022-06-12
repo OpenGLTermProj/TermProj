@@ -147,7 +147,7 @@ int main(int argc, char** argv)
 		// --------------------
 		float currentFrame = static_cast<float>(glfwGetTime());
 		deltaTime = currentFrame - lastFrame;
-		std::cout << "deltatime : " << deltaTime << endl;
+		//std::cout << "deltatime : " << deltaTime << endl;
 		currentSpeed = (deltaTime / AVG_DELTATIME) * baseSpeed;
 		lastFrame = currentFrame;
 		// input
@@ -238,9 +238,9 @@ int main(int argc, char** argv)
 
 					if (jokerAnimationLastTime / hammerAnimation.GetDuration() > 0.5f)
 					{
-						selected[min(selectCard + 1, 6)] =1;
-						selected[max(selectCard -1 , 0)] = 1;
-						selected[selectCard] = 1;
+						selected[min(selectCard + 1, 6)] = (selected[min(selectCard + 1, 6)] == 2) ? 2 : 1;
+						selected[max(selectCard -1 , 0)] = (selected[max(selectCard - 1, 0)] == 2) ? 2 : 1;
+						selected[selectCard] = (selected[selectCard] == 2) ? 2 : 1;
 						if (selectCard == jokerIndex)
 						{
 							jokerCardFound = TRUE;
@@ -565,9 +565,13 @@ int main(int argc, char** argv)
 					gameState = State::Lobby;
 					heart = 3;
 					jokerIndex = rand() % 7;
-					for (auto& state : selected)
+					jokerCardFound = false;
+					for (int i = 0; i < 7; i++)
 					{
-						state = 0;
+						selected[i] = 0;
+						rotateAngleX[i] = -90.f;
+						rotateAngleY[i] = 0.f;
+						rotateAngleZ[i] = cAngle[i];
 					}
 				}
 			}
