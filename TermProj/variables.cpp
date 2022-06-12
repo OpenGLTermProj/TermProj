@@ -229,3 +229,5 @@ unsigned int helpButtonVBO = NULL, helpButtonVAO = NULL, helpButtonEBO = NULL;
 unsigned int exitButtonVBO = NULL, exitButtonVAO = NULL, exitButtonEBO = NULL;
 unsigned int backButtonVBO = NULL, backButtonVAO = NULL, backButtonEBO = NULL;
 unsigned int skyboxVBO = NULL, skyboxVAO = NULL;
+
+particles particle[MAX_PARTICLE];

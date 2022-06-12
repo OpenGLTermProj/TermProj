@@ -13,6 +13,7 @@
 #define VARIABLES_H
 #define PI 3.141592
 #define AVG_DELTATIME 0.02
+#define MAX_PARTICLE 100
 
 extern enum State:short
 {
@@ -52,6 +53,18 @@ enum GameSequence : short {
 	Finish,
 };
 
+typedef struct {
+	bool    active;
+	float   life;
+	float   fade;
+	glm::vec3 color;
+	glm::vec3 pos;
+	glm::vec3 vel;
+	glm::vec3 force;
+}particles;
+
+
+extern particles particle[MAX_PARTICLE];
 extern State gameState;
 extern MousePos buttonSelected;
 extern GameSequence sequence;

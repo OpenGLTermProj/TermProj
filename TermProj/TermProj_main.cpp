@@ -321,7 +321,7 @@ int main(int argc, char** argv)
 			characterShader.setMat4("model", model);
 
 			character.Draw(characterShader);
-
+			hammer.Draw(characterShader);
 			lightingShader.use();
 			lightingShader.setVec3("viewPos", camera.Position);
 			lightingShader.setFloat("material.shininess", 32.0f);
@@ -475,7 +475,7 @@ int main(int argc, char** argv)
 			
 			model = glm::mat4(1.0f);
 			model = glm::translate(model, player);
-			model = glm::scale(model, glm::vec3(0.03f, 0.03f, 0.03f));
+			model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
 			model = glm::rotate(model, glm::radians(pAngle), glm::vec3(0, 1, 0));
 			cubeShader.setMat4("model", model);
 			glBindVertexArray(cubeVAO);
