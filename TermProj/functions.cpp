@@ -113,7 +113,7 @@ bool PositionCheck()
 	{
 		if (card != 7)
 		{
-			printf("selection card change %d to %d\n", selectCard, card);
+			//std::cout << string_format("selection card change %d to %d", selectCard, card) << std::endl;
 			selectCard = card;
 		}
 	}
