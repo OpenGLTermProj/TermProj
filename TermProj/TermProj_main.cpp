@@ -208,9 +208,9 @@ int main(int argc, char** argv)
 
 			string help1 = string_format("1. Find Joker Card");
 			string help2 = string_format("2. Flip Cards using Clown's Hammering");
-			string help3 = string_format("3. Move Character with W, A, S, D");
+			string help3 = string_format("3. Move Character with Keyboard Arrows");
 			string help4 = string_format("4. Find Joker in 3 times");
-			string help5 = string_format("p.s. Hope you good luck");
+			string help5 = string_format("p.s. Hope you good luck...");
 
 			RenderText(textShader, help1, 150.0f, 500.0f, 1.25f, glm::vec3(1.0, 0.0f, 0.0f));
 			RenderText(textShader, help2, 150.0f, 425.0f, 1.25f, glm::vec3(1.0, 0.0f, 0.0f));
@@ -565,6 +565,10 @@ int main(int argc, char** argv)
 					gameState = State::Lobby;
 					heart = 3;
 					jokerIndex = rand() % 7;
+					for (auto& state : selected)
+					{
+						state = 0;
+					}
 				}
 			}
 
