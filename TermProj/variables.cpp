@@ -12,9 +12,7 @@ MousePos buttonSelected = MousePos::Idle;
 GameSequence sequence = GameSequence::Ready;
 float sequenceStartTime =0.0f;
 
-Model jCard;
-Model eCard;
-Model table;
+
 
 Shader textShader;
 Shader tableShader;

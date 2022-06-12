@@ -563,6 +563,7 @@ int main(int argc, char** argv)
 				else {
 					sequence = GameSequence::Ready;
 					gameState = State::Lobby;
+					jokerCardFound = false;
 					heart = 3;
 					jokerIndex = rand() % 7;
 					jokerCardFound = false;

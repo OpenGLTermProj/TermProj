@@ -65,10 +65,6 @@ extern Shader eCardShader;
 extern Shader cubeShader;
 extern Shader lobbyBackgroundShader;
 
-extern Model table;
-extern Model eCard;
-extern Model jCard;
-
 // transition
 extern glm::vec3 jokerFacing;
 extern glm::vec3 jokerModel;
