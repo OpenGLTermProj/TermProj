@@ -71,7 +71,9 @@ int main(int argc, char** argv)
 	Model hammer(FileSystem::getPath("Data/hammer/hammer.obj"));
 	Model clown(FileSystem::getPath("Data/clown/Standing Melee Attack Downward.dae"));
 	Animation hammerAnimation(FileSystem::getPath("Data/clown/Standing Melee Attack Downward.dae"), &clown);
-	Animator animator(&hammerAnimation);
+	Animation clownIdleAnimation(FileSystem::getPath("Data/clown/idle.dae"), &clown);
+	Animator hammerAnimator(&hammerAnimation);
+	Animator clownIdleAnimator(&clownIdleAnimation);
 
 	Shader textShader("shader/text.vs", "shader/text.fs");
 	Shader tableShader("shader/table.vs", "shader/table.fs");
@@ -144,7 +146,7 @@ int main(int argc, char** argv)
 		// input
 		// -----
 		processInput(window);
-		animator.UpdateAnimation(deltaTime);
+	
 		// render
 		// ------
 		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
@@ -213,6 +215,21 @@ int main(int argc, char** argv)
 		}
 		case State::InGame:
 		{
+			if (jokerAnimation == AnimationState::Hammering)
+			{
+				hammerAnimator.UpdateAnimation(deltaTime);
+				if (hammerAnimator.GetCurrentTime() < jokerAnimationLastTime)
+				{
+					jokerAnimationLastTime = 0.0f;
+					jokerAnimation = AnimationState::AniIdle;
+				}
+				else {
+					jokerAnimationLastTime = hammerAnimator.GetCurrentTime();
+				}
+			}
+			else {
+				clownIdleAnimator.UpdateAnimation(deltaTime);
+			}
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 			animShader.use();
 			glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.01f, 100.0f);
@@ -222,13 +239,14 @@ int main(int argc, char** argv)
 			animShader.setMat4("projection", projection);
 			animShader.setMat4("view", view);
 			// material properties
-			auto transforms = animator.GetFinalBoneMatrices();
+			auto transforms = hammerAnimator.GetFinalBoneMatrices();
 			for (int i = 0; i < transforms.size(); ++i)
 				animShader.setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
 
 			glm::mat4 model = glm::mat4(1.0f);
-			model = glm::rotate(model, glm::radians(180.f), glm::vec3(0.0f, 1.0f, 0.0f));
-			model = glm::translate(model, glm::vec3(0.0f, -0.2f, -0.5f)); // translate it down so it's at the center of the scene
+			model = glm::translate(model, jokerModel);
+			model = glm::rotate(model, glm::radians(jokerFacingAngle), glm::vec3(0.0f, 1.0f, 0.0f));
+			 // translate it down so it's at the center of the scene
 			model = glm::scale(model, glm::vec3(.3f, .3f, .3f));
 			animShader.setMat4("model", model);
 
@@ -357,7 +375,6 @@ int main(int argc, char** argv)
 
 			model = glm::mat4(1.0f);
 			model = glm::translate(model, room);
-			
 			model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
 
 			unsigned int modelLoc = glGetUniformLocation(cubeShader.ID, "model");

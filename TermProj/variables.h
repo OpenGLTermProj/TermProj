@@ -11,7 +11,7 @@
 
 #ifndef VARIABLES_H
 #define VARIABLES_H
-
+#define PI 3.141592
 
 extern enum State:short
 {
@@ -58,6 +58,8 @@ extern Model eCard;
 extern Model jCard;
 
 // transition
+extern glm::vec3 jokerFacing;
+extern glm::vec3 jokerModel;
 extern glm::vec3 room;
 extern glm::vec3 joker;
 extern glm::vec3 player;
@@ -69,6 +71,7 @@ extern float rotateAngleZ[7];
 extern float pAngle;
 extern float cAngle[7];
 extern float speed ;
+extern float jokerFacingAngle;
 extern int jokerIndex;
 extern int selectCard ;
 extern int selected[7];
@@ -137,4 +140,15 @@ extern unsigned int cubeVAO, cubeVBO, cubeEBO;
 extern float syncedY;
 extern float syncedX;
 
+enum AnimationState : short {
+	AniIdle = 0,
+	Running,
+	Hammering
+};
+
+extern AnimationState jokerAnimation;
+extern AnimationState playerAnimation;
+
+extern float jokerAnimationLastTime;
+extern float playerAnimationLastTime;
 #endif

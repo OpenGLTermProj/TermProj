@@ -21,6 +21,8 @@ Shader eCardShader;
 Shader cubeShader;
 
 // transition
+glm::vec3 jokerModel = glm::vec3(0.0f, -0.2f, 0.5f);
+glm::vec3 jokerFacing = glm::vec3(0,0,0);
 glm::vec3 room = glm::vec3(0.0, 1.3, 0);
 glm::vec3 joker = glm::vec3(0.0f, -0.15f, 0.3f);
 
@@ -33,7 +35,8 @@ float pAngle = 0.0;
 float cAngle[7] = { -75, -50, -25, 0, 25, 50, 75 }; // �ʱ� rotate ���� �� ��
 float rotateAngleX[7] = { -90.f, -90.f, -90.f, -90.f, -90.f, -90.f, -90.f }; // Card Animation�� ����ϴ� angleX ��
 float rotateAngleY[7] = { 0.f };
-float rotateAngleZ[7] = { -75, -50, -25, 0, 25, 50, 75 }; // Card Animation�� ����ϴ� angleZ ��
+float rotateAngleZ[7] = { -75, -50, -25, 0, 25, 50, 75 };
+float jokerFacingAngle =180;// Card Animation�� ����ϴ� angleZ ��
 float speed = 0.001;
 int jokerIndex = 0;
 int selected[7] = { 0, };
@@ -69,6 +72,10 @@ unsigned int cubeTexture;
 
 vector<std::string> faces;
 
+AnimationState jokerAnimation = AnimationState::Hammering;
+AnimationState playerAnimation = AnimationState::AniIdle;
+float jokerAnimationLastTime =0.0f;
+float playerAnimationLastTime = 0.0f;
 
 float backgroundVertices[] = {
 	// positions          // colors           // texture coords

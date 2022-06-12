@@ -333,6 +333,12 @@ void processInput(GLFWwindow* window)
 			camera.Position.x -= Tx;
 			camera.Position.z -= Tz;
 		}
+		jokerFacing = player - jokerModel;
+		jokerFacing = glm::normalize(jokerFacing);
+		
+		auto angle = atan2(jokerFacing.z, jokerFacing.x);
+		jokerFacingAngle = -180 * angle / PI + 90;
+		
 	}
 	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
 	{
@@ -346,8 +352,13 @@ void processInput(GLFWwindow* window)
 			camera.Position.x += Tx;
 			camera.Position.z += Tz;
 		}
+		jokerFacing = player - jokerModel;
+		jokerFacing = glm::normalize(jokerFacing);
+		auto angle = atan2(jokerFacing.z, jokerFacing.x);
+		jokerFacingAngle = -180 * angle / PI+90;
 	}
-
+	if (glfwGetKey(window, GLFW_KEY_KP_0) == GLFW_PRESS)
+		jokerAnimation = AnimationState::Hammering;
 
 	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
 		pAngle += 1;
