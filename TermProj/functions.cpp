@@ -378,6 +378,11 @@ void processInput(GLFWwindow* window)
 	if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
 		player[1] -= speed;
 
+	int temp = rand() % 7; // debug
+	if (glfwGetKey(window, GLFW_KEY_KP_5) == GLFW_PRESS)
+		if (selected[temp] != 2)
+			selected[temp] = 1;
+
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
 	{
 		switch (buttonSelected)

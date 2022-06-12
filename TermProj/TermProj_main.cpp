@@ -341,6 +341,7 @@ int main(int argc, char** argv)
 				if (selected[i] == 0)
 				{
 					card[i].y = 0.145;
+					isCardGround[i] = true;
 					model = DrawCard(i, 0, rotateAngleX[i]);	// it's a bit too big for our scene, so scale it down
 				}
 				else if (selected[i] == 2)
@@ -349,6 +350,7 @@ int main(int argc, char** argv)
 					rotateAngleY[i] = 180.f;
 					rotateAngleZ[i] = -cAngle[i];
 					card[i].y = 0.195;
+					isCardGround[i] = true;
 					model = DrawCard(i, 5, rotateAngleY[i]);
 				}
 				else if (selected[i] == 1)
@@ -357,6 +359,7 @@ int main(int argc, char** argv)
 					{
 						if (rotateAngleY[i] < 90.f)
 						{
+							isCardGround[i] = false;
 							model = DrawCard(i, 3, rotateAngleY[i]);
 						}
 						else if (rotateAngleY[i] > 180.f)
@@ -366,10 +369,12 @@ int main(int argc, char** argv)
 							rotateAngleY[i] = 180.f;
 							rotateAngleZ[i] = -cAngle[i];
 							card[i].y = 0.195;
+							isCardGround[i] = true;
 							model = DrawCard(i, 5, rotateAngleY[i]);
 						}
 						else
 						{
+							isCardGround[i] = false;
 							model = DrawCard(i, 4, rotateAngleY[i]);
 						}
 					}
@@ -377,6 +382,7 @@ int main(int argc, char** argv)
 					{
 						if (rotateAngleX[i] < 90.f)
 						{
+							isCardGround[i] = false;
 							model = DrawCard(i, 1, rotateAngleX[i]);
 						}
 						else if (rotateAngleX[i] > 270.f)
@@ -384,13 +390,22 @@ int main(int argc, char** argv)
 							selected[i] = 0;
 							rotateAngleX[i] = -90.f;
 							card[i].y = 0.145;
+							isCardGround[i] = true;
 							model = DrawCard(i, 0, rotateAngleX[i]);
 						}
 						else
 						{
+							isCardGround[i] = false;
 							model = DrawCard(i, 2, rotateAngleX[i]);
 						}
 					}
+				}
+
+				isGround = true;
+				for (int i = 0; i < 7; i++)
+				{
+					if (!isCardGround[i])
+						isGround = false;
 				}
 
 				lightingShader.setMat4("model", model);
@@ -430,7 +445,7 @@ int main(int argc, char** argv)
 
 			string debug1 = string_format("Front : %f, %f, %f | Position : %f, %f, %f | Yaw : %f | Pitch : %f", camera.Front[0], camera.Front[1], camera.Front[2],
 				camera.Position[0], camera.Position[1], camera.Position[2], camera.Yaw, camera.Pitch);
-			string debug2 = string_format("Model Position | %f, %f, %f | Angle %f", player[0], player[1], player[2], pAngle);
+			string debug2 = string_format("Model Position | %f, %f, %f | Angle %f | IsGround : %d", player[0], player[1], player[2], pAngle, isGround);
 			string hud = string_format("Life : %d", heart);
 
 			RenderText(textShader, debug1, 25.0f, 25.0f, 0.3f, glm::vec3(0.5, 0.8f, 0.2f));
@@ -460,8 +475,8 @@ int main(int argc, char** argv)
 	}
 
 
-	glDeleteVertexArrays(1, &VAO);
-	glDeleteBuffers(1, &VBO);
+	//glDeleteVertexArrays(1, &VAO);
+	//glDeleteBuffers(1, &VBO);
 	// glfw: terminate, clearing all previously allocated GLFW resources.
 	// ------------------------------------------------------------------
 	glfwTerminate();

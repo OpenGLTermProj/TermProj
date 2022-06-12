@@ -73,6 +73,8 @@ extern float pAngle;
 extern float cAngle[7];
 extern float speed ;
 extern float jokerFacingAngle;
+extern bool isCardGround[7];
+extern bool isGround;
 extern int jokerIndex;
 extern int selectCard ;
 extern int selected[7];
