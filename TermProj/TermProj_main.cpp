@@ -87,6 +87,7 @@ int main(int argc, char** argv)
 	Shader lobbyShader("shader/lobby.vs", "shader/lobby.fs");
 	Shader animShader("shader/anim_model.vs", "shader/anim_model.fs");
 	Shader characterShader("shader/anim_model.vs", "shader/anim_model.fs");
+	Shader geoShader("shader/geometry_shader.vs", "shader/geometry_shader.fs", "shader/geometry_shader.gs");
 	lightingShader.use();
 	lightingShader.setInt("material.diffuse", 0);
 	lightingShader.setInt("material.specular", 1);
@@ -274,8 +275,18 @@ int main(int argc, char** argv)
 			 // translate it down so it's at the center of the scene
 			model = glm::scale(model, glm::vec3(.3f, .3f, .3f));
 			animShader.setMat4("model", model);
+			
+			if(sequence != GameSequence::Finish)
+				clown.Draw(animShader);
+			
+			geoShader.use();
+			geoShader.setMat4("projection", projection);
+			geoShader.setMat4("view", view);
+			model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
+			geoShader.setMat4("model", model);
+			geoShader.setFloat("time", static_cast<float>(glfwGetTime()));
 
-			clown.Draw(animShader);
+			
 
 			///further development
 
@@ -584,7 +595,7 @@ int main(int argc, char** argv)
 
 			if (sequence == GameSequence::Finish)
 			{
-				if (currentFrame - sequenceStartTime <= 3) {
+				if (currentFrame - sequenceStartTime <= 6) {
 
 					if (jokerCardFound)
 					{
@@ -593,6 +604,8 @@ int main(int argc, char** argv)
 					else {
 						RenderText(textShader, "Lose!", SCR_WIDTH / 2 - 150.0f, SCR_HEIGHT / 2 - 75.0f, 3.0f, glm::vec3(0.5, 0.8f, 0.2f));
 					}
+					geoShader.use();
+					clown.Draw(geoShader);
 				}
 				else {
 
