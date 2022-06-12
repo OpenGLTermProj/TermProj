@@ -252,7 +252,7 @@ int main(int argc, char** argv)
 			if (playerAnimation == AnimationState::Running)
 			{
 				characterAnimator.UpdateAnimation(deltaTime);
-				playerAnimation = AnimationState::AniIdle;
+				
 			}
 			
 			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -472,15 +472,46 @@ int main(int argc, char** argv)
 			glBindVertexArray(cubeVAO);
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 			glBindVertexArray(0);
+
+			while (particle.size() < MAX_PARTICLE)
+			{
+				auto ticle =  particles();
+				rand() % 2 > 1 ? ticle.active = true : ticle.active = false;
+				ticle.pos = player + glm::vec3(rand() % 10*0.1, rand() %10*0.1 , rand() %10*0.1);
+				ticle.life = rand() % 10 ;
+				ticle.vel = glm::normalize( glm::vec3(rand() % 10*0.01, rand() % 10*0.01, rand() % 10*0.01));
+				ticle.rotate = rand() % 360;
+				ticle.roataeSpeed = rand() % 4;
+				particle.push_back(ticle);
+			}
+
+			for (auto& ticle : particle)
+			{
+				ticle.life -= 0.1f;
+				if (ticle.life < 0.0f)
+				{
+					if (playerAnimation == AnimationState::Running)
+					{
+						ticle.life = rand() % 10;
+						ticle.pos = player;
+					}
+					continue;
+				}
+
+				model = glm::mat4(1.0f);
+				model = glm::translate(model, ticle.pos + ticle.vel * baseSpeed * 0.1f);
+				model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
+				model = glm::rotate(model, glm::radians(ticle.rotate ), glm::vec3(0, 1, 0));
+				cubeShader.setMat4("model", model);
+				glBindVertexArray(cubeVAO);
+				glDrawArrays(GL_TRIANGLES, 0, 36);
+				glBindVertexArray(0);
+				ticle.pos += ticle.vel * baseSpeed*0.1f ;
+				ticle.active ? ticle.rotate += ticle.roataeSpeed : ticle.rotate -= ticle.roataeSpeed;
+			}
+
+
 			
-			model = glm::mat4(1.0f);
-			model = glm::translate(model, player);
-			model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
-			model = glm::rotate(model, glm::radians(pAngle), glm::vec3(0, 1, 0));
-			cubeShader.setMat4("model", model);
-			glBindVertexArray(cubeVAO);
-			glDrawArrays(GL_TRIANGLES, 0, 36);
-			glBindVertexArray(0);
 
 			string debug1 = string_format("Front : %f, %f, %f | Position : %f, %f, %f | Yaw : %f | Pitch : %f", camera.Front[0], camera.Front[1], camera.Front[2],
 				camera.Position[0], camera.Position[1], camera.Position[2], camera.Yaw, camera.Pitch);
@@ -577,7 +608,7 @@ int main(int argc, char** argv)
 				}
 			}
 
-			
+			playerAnimation = AnimationState::AniIdle;
 			break;
 		}
 		case State::End:

@@ -61,10 +61,12 @@ typedef struct {
 	glm::vec3 pos;
 	glm::vec3 vel;
 	glm::vec3 force;
+	float rotate;
+	float roataeSpeed;
 }particles;
 
 
-extern particles particle[MAX_PARTICLE];
+extern std::vector<particles> particle;
 extern State gameState;
 extern MousePos buttonSelected;
 extern GameSequence sequence;
