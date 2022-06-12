@@ -125,6 +125,7 @@ extern bool firstMouse;
 extern float currentFrame;
 extern float deltaTime;
 extern float lastFrame;
+extern float fireworkDelta;
 
 #pragma region Text
 /// Holds all state information relevant to a character as loaded using FreeType

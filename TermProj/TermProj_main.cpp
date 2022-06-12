@@ -284,7 +284,6 @@ int main(int argc, char** argv)
 			geoShader.setMat4("view", view);
 			model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
 			geoShader.setMat4("model", model);
-			geoShader.setFloat("time", static_cast<float>(glfwGetTime()));
 
 			
 
@@ -600,12 +599,13 @@ int main(int argc, char** argv)
 					if (jokerCardFound)
 					{
 						RenderText(textShader, "Victory!", SCR_WIDTH / 2 - 150.0f, SCR_HEIGHT / 2 - 75.0f, 3.0f, glm::vec3(0.5, 0.8f, 0.2f));
+						geoShader.use();
+						geoShader.setFloat("time", static_cast<float>(glfwGetTime()));
+						clown.Draw(geoShader);
 					}
 					else {
 						RenderText(textShader, "Lose!", SCR_WIDTH / 2 - 150.0f, SCR_HEIGHT / 2 - 75.0f, 3.0f, glm::vec3(0.5, 0.8f, 0.2f));
 					}
-					geoShader.use();
-					clown.Draw(geoShader);
 				}
 				else {
 
