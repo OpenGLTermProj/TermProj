@@ -12,6 +12,7 @@
 #ifndef VARIABLES_H
 #define VARIABLES_H
 #define PI 3.141592
+#define AVG_DELTATIME 0.02
 
 extern enum State:short
 {
@@ -42,8 +43,19 @@ extern enum MousePos : short
 	ExitButton
 };
 
+enum GameSequence : short {
+	Ready=0,
+	CountDown,
+	Hammer,
+	Wait,
+	Check,
+	Finish,
+};
+
 extern State gameState;
 extern MousePos buttonSelected;
+extern GameSequence sequence;
+extern float sequenceStartTime;
 
 extern Shader textShader;
 extern Shader textShader;
@@ -71,7 +83,8 @@ extern float rotateAngleY[7];
 extern float rotateAngleZ[7];
 extern float pAngle;
 extern float cAngle[7];
-extern float speed ;
+extern float baseSpeed;
+extern float currentSpeed;
 extern float jokerFacingAngle;
 extern bool isCardGround[7];
 extern bool isGround;
@@ -79,6 +92,7 @@ extern int jokerIndex;
 extern int selectCard ;
 extern int selected[7];
 extern int heart;
+extern bool jokerCardFound;
 
 // debug
 extern float hAngle[3];

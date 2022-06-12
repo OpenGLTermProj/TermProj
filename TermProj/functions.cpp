@@ -83,9 +83,13 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 	camera.ProcessMouseScroll(static_cast<float>(yoffset));
 }
 
+
+
 int GetCardOnPlayer(float x, float z)
 {
-	float r = pow(0.06, 2); // Card�� Select �� ����
+	float r = pow(0.06, 2); 
+	
+	if (!isGround) return 7;// Card�� Select �� ����
 	for (int i = 0; i < 7; i++)
 	{
 		if (pow(x - card_mid[i].x, 2) + pow(z - card_mid[i].z, 2) < r)
@@ -319,8 +323,8 @@ void processInput(GLFWwindow* window)
 		player = glm::vec3(0, 0.182, 0);
 
 	// character move
-	float Tx = speed * cos((-pAngle - 90) * 3.141592 / 180);
-	float Tz = speed * sin((-pAngle - 90) * 3.141592 / 180);
+	float Tx = currentSpeed * cos((-pAngle - 90) * 3.141592 / 180);
+	float Tz = currentSpeed * sin((-pAngle - 90) * 3.141592 / 180);
 	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
 	{
 		player.x += Tx;
@@ -364,19 +368,19 @@ void processInput(GLFWwindow* window)
 
 	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
 	{
-		pAngle += 1;
+		pAngle += 1.5;
 		playerAnimation = AnimationState::Running;
 	}
 	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
 	{
-		pAngle -= 1;
+		pAngle -= 1.5;
 		playerAnimation = AnimationState::Running;
 	}
 
 	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
-		player[1] += speed;
+		player[1] += currentSpeed;
 	if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
-		player[1] -= speed;
+		player[1] -= currentSpeed;
 
 	int temp = rand() % 7; // debug
 	if (glfwGetKey(window, GLFW_KEY_KP_5) == GLFW_PRESS)

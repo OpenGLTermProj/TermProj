@@ -147,6 +147,8 @@ int main(int argc, char** argv)
 		// --------------------
 		float currentFrame = static_cast<float>(glfwGetTime());
 		deltaTime = currentFrame - lastFrame;
+		std::cout << "deltatime : " << deltaTime << endl;
+		currentSpeed = (deltaTime / AVG_DELTATIME) * baseSpeed;
 		lastFrame = currentFrame;
 		// input
 		// -----
@@ -189,7 +191,7 @@ int main(int argc, char** argv)
 			RenderText(textShader, debug1, 25.0f, 25.0f, 0.5f, glm::vec3(0.5, 0.8f, 0.2f));
 			RenderText(textShader, debug2, 25.0f, 50.0f, 0.5f, glm::vec3(0.5, 0.8f, 0.2f));
 			RenderText(textShader, debug3, 25.0f, 75.0f, 0.5f, glm::vec3(0.5, 0.8f, 0.2f));
-
+			
 			break;
 		}
 		case State::LobbyHelp:
@@ -223,14 +225,27 @@ int main(int argc, char** argv)
 			if (jokerAnimation == AnimationState::Hammering)
 			{
 				hammerAnimator.UpdateAnimation(deltaTime);
-				
+				jokerAnimationLastTime += deltaTime;
 				if (hammerAnimator.GetCurrentTime() < jokerAnimationLastTime)
 				{
 					jokerAnimationLastTime = 0.0f;
 					jokerAnimation = AnimationState::AniIdle;
+					sequence = GameSequence::Check;
+					sequenceStartTime = static_cast<float>(glfwGetTime());
 				}
 				else {
 					jokerAnimationLastTime = hammerAnimator.GetCurrentTime();
+
+					if (jokerAnimationLastTime / hammerAnimation.GetDuration() > 0.5f)
+					{
+						selected[min(selectCard + 1, 6)] =1;
+						selected[max(selectCard -1 , 0)] = 1;
+						selected[selectCard] = 1;
+						if (selectCard == jokerIndex)
+						{
+							jokerCardFound = TRUE;
+						}
+					}
 				}
 			}
 
@@ -261,6 +276,30 @@ int main(int argc, char** argv)
 			animShader.setMat4("model", model);
 
 			clown.Draw(animShader);
+
+			///further development
+
+		//	auto BoneRight = hammerAnimation.FindBone("RightHand");
+		//	auto localtransform = hammerAnimator.GetFinalBoneMatrices()[23];
+
+		//	lightingShader.use();
+		//	//model *= localtransform;
+		//	model = glm::mat4(1.0f);
+		//	/*model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));*/
+		//	model = hammerAnimation.FindBone("RightHand")->GetLocalTransform() *;
+		///*	model = glm::scale(model, glm::vec3(.3f, .3f, .3f));
+		//	model = hammerAnimator.GetFinalBoneMatrices()[23];*/
+		//	// translate it down so it's at the center of the scene
+		//	
+		//
+		//	/*model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		//	model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));*/
+		//	
+		//	lightingShader.setMat4("projection", projection);
+		//	lightingShader.setMat4("view", view);
+		//	lightingShader.setMat4("model", model);
+		//	hammer.Draw(lightingShader);
+
 
 			characterShader.use();
 			projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.01f, 100.0f);
@@ -452,6 +491,82 @@ int main(int argc, char** argv)
 			RenderText(textShader, debug2, 25.0f, 50.0f, 0.3f, glm::vec3(0.5, 0.8f, 0.2f));
 			RenderText(textShader, to_string(currentFrame), 25.0f, 75.0f, 0.3f, glm::vec3(0.5, 0.8f, 0.2f));
 			RenderText(textShader, hud, 25.0f, 650.0f, 1.25f, glm::vec3(1.0f, 0.0f, 0.0f));
+
+			if (sequence == GameSequence::Ready)
+			{
+				if (sequenceStartTime == 0.0f)
+				{
+					sequenceStartTime = static_cast<float>(glfwGetTime());;
+					
+				}
+				if( currentFrame - sequenceStartTime <= 1 )
+					RenderText(textShader, "Ready", SCR_WIDTH/2-150.0f, SCR_HEIGHT/2-75.0f, 3.0f, glm::vec3(0.5, 0.8f, 0.2f));
+				else if (currentFrame - sequenceStartTime <= 2 )
+					RenderText(textShader, "Start!", SCR_WIDTH / 2 - 150.0f, SCR_HEIGHT / 2 - 75.0f, 3.0f, glm::vec3(0.5, 0.8f, 0.2f));
+				else {
+					sequence = GameSequence::CountDown;
+					sequenceStartTime = static_cast<float>(glfwGetTime());;
+				}
+
+			}
+
+			if (sequence == GameSequence::CountDown)
+			{
+				if (currentFrame - sequenceStartTime  <= 1)
+					RenderText(textShader, "3", SCR_WIDTH / 2 - .01f *SCR_WIDTH, SCR_HEIGHT / 2 + 0.14f * SCR_WIDTH, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
+				else if (currentFrame - sequenceStartTime  <= 2)
+					RenderText(textShader, "2", SCR_WIDTH / 2 - .01f * SCR_WIDTH, SCR_HEIGHT / 2 + 0.14f * SCR_WIDTH, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
+				else if (currentFrame - sequenceStartTime  <= 3)
+					RenderText(textShader, "1!", SCR_WIDTH / 2 - .01f * SCR_WIDTH, SCR_HEIGHT / 2 + 0.14f * SCR_WIDTH, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
+				else {
+					sequence = GameSequence::Hammer;
+					jokerAnimation = AnimationState::Hammering;
+					sequenceStartTime = static_cast<float>(glfwGetTime());
+				}
+
+			}
+
+			if (sequence == GameSequence::Check)
+			{
+				if (isGround)
+				{
+					if (jokerCardFound)
+					{
+						sequence = GameSequence::Finish;						
+					}
+					else {
+						heart -=1;
+						if (heart > 0)
+						{
+							sequence = GameSequence::CountDown;
+						}
+						else {
+							sequence = GameSequence::Finish;
+						}
+					}
+				}
+				sequenceStartTime = static_cast<float>(glfwGetTime());
+			}
+
+			if (sequence == GameSequence::Finish)
+			{
+				if (currentFrame - sequenceStartTime <= 3) {
+
+					if (jokerCardFound)
+					{
+						RenderText(textShader, "Victory!", SCR_WIDTH / 2 - 150.0f, SCR_HEIGHT / 2 - 75.0f, 3.0f, glm::vec3(0.5, 0.8f, 0.2f));
+					}
+					else {
+						RenderText(textShader, "Lose!", SCR_WIDTH / 2 - 150.0f, SCR_HEIGHT / 2 - 75.0f, 3.0f, glm::vec3(0.5, 0.8f, 0.2f));
+					}
+				}
+				else {
+					sequence = GameSequence::Ready;
+					gameState = State::Lobby;
+					heart = 3;
+					jokerIndex = rand() % 7;
+				}
+			}
 
 			
 			break;

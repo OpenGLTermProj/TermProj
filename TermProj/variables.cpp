@@ -7,8 +7,10 @@
 
 const char* logl_root = "C:/repo/TermProj";
 
-State gameState = State::InGame;
+State gameState = State::Lobby;
 MousePos buttonSelected = MousePos::Idle;
+GameSequence sequence = GameSequence::Ready;
+float sequenceStartTime =0.0f;
 
 Model jCard;
 Model eCard;
@@ -38,14 +40,15 @@ float rotateAngleX[7] = { -90.f, -90.f, -90.f, -90.f, -90.f, -90.f, -90.f }; // 
 float rotateAngleY[7] = { 0.f };
 float rotateAngleZ[7] = { -75, -50, -25, 0, 25, 50, 75 };
 float jokerFacingAngle =180;// Card Animation�� ����ϴ� angleZ ��
-float speed = 0.001;
+float baseSpeed = 0.005;
+float currentSpeed;
 bool isCardGround[7] = { false, };
 bool isGround = true;
 int jokerIndex = 0;
 int selected[7] = { 0, };
 int selectCard = 3;
 int heart = 3;
-
+bool jokerCardFound =false;
 // debug
 float hAngle[3] = { 0, };
 
@@ -59,7 +62,7 @@ float syncedY;
 float syncedX;
 
 // camera
-Camera camera(glm::vec3(0.0f, 0.75f, -0.5f), glm::vec3(0.f, 1.f, 1.f), 90.f, -35.f);
+Camera camera(glm::vec3(0.0f, 0.5f, -0.5f), glm::vec3(0.f, 1.f, 1.f), 90.f, -35.f);
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -75,7 +78,7 @@ unsigned int cubeTexture;
 
 vector<std::string> faces;
 
-AnimationState jokerAnimation = AnimationState::Hammering;
+AnimationState jokerAnimation = AnimationState::AniIdle;
 AnimationState playerAnimation = AnimationState::AniIdle;
 float jokerAnimationLastTime =0.0f;
 float playerAnimationLastTime = 0.0f;
