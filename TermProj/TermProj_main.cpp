@@ -600,12 +600,14 @@ int main(int argc, char** argv)
 					{
 						RenderText(textShader, "Victory!", SCR_WIDTH / 2 - 150.0f, SCR_HEIGHT / 2 - 75.0f, 3.0f, glm::vec3(0.5, 0.8f, 0.2f));
 						geoShader.use();
-						fireworkDelta += 0.02;
+						fireworkDelta += 0.01;
 						geoShader.setFloat("time", fireworkDelta);
 						clown.Draw(geoShader);
 					}
 					else {
 						RenderText(textShader, "Lose!", SCR_WIDTH / 2 - 150.0f, SCR_HEIGHT / 2 - 75.0f, 3.0f, glm::vec3(0.5, 0.8f, 0.2f));
+						animShader.use();
+						clown.Draw(animShader);
 					}
 				}
 				else {

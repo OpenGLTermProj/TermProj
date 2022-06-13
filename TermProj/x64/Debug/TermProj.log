@@ -38,14 +38,7 @@ C:\repo\TermProj\TermProj\TermProj_main.cpp(493,27): warning C4244: '=': 'int'�
 C:\repo\TermProj\TermProj\TermProj_main.cpp(494,32): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 C:\repo\TermProj\TermProj\TermProj_main.cpp(505,27): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 C:\repo\TermProj\TermProj\TermProj_main.cpp(603,28): warning C4305: '+=': 'double'에서 'float'(으)로 잘립니다.
-  variables.cpp
-C:\repo\TermProj\TermProj\variables.cpp(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
-C:\repo\TermProj\TermProj\variables.h(25,2): warning C4091: 'extern ': 변수를 선언하지 않으면 'State' 왼쪽은 무시됩니다.
-C:\repo\TermProj\TermProj\variables.h(36,2): warning C4091: 'extern ': 변수를 선언하지 않으면 'Vertices' 왼쪽은 무시됩니다.
-C:\repo\TermProj\TermProj\variables.h(45,2): warning C4091: 'extern ': 변수를 선언하지 않으면 'MousePos' 왼쪽은 무시됩니다.
-C:\repo\TermProj\TermProj\variables.cpp(41,24): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
-  코드를 생성하고 있습니다...
 C:\repo\TermProj\TermProj\include\learnopengl\bone.h(96): warning C4715: 'Bone::GetPositionIndex': 모든 제어 경로에서 값을 반환하지는 않습니다.
-C:\repo\TermProj\TermProj\include\learnopengl\bone.h(106): warning C4715: 'Bone::GetRotationIndex': 모든 제어 경로에서 값을 반환하지는 않습니다.
 C:\repo\TermProj\TermProj\include\learnopengl\bone.h(116): warning C4715: 'Bone::GetScaleIndex': 모든 제어 경로에서 값을 반환하지는 않습니다.
+C:\repo\TermProj\TermProj\include\learnopengl\bone.h(106): warning C4715: 'Bone::GetRotationIndex': 모든 제어 경로에서 값을 반환하지는 않습니다.
   TermProj.vcxproj -> C:\repo\TermProj\x64\Debug\TermProj.exe
