@@ -600,7 +600,8 @@ int main(int argc, char** argv)
 					{
 						RenderText(textShader, "Victory!", SCR_WIDTH / 2 - 150.0f, SCR_HEIGHT / 2 - 75.0f, 3.0f, glm::vec3(0.5, 0.8f, 0.2f));
 						geoShader.use();
-						geoShader.setFloat("time", static_cast<float>(glfwGetTime()));
+						fireworkDelta += 0.02;
+						geoShader.setFloat("time", fireworkDelta);
 						clown.Draw(geoShader);
 					}
 					else {
@@ -636,6 +637,7 @@ int main(int argc, char** argv)
 						rotateAngleZ[i] = cAngle[i];
 					}
 					sequenceStartTime = 0.0f;
+					fireworkDelta = 5.0f;
 				}
 			}
 

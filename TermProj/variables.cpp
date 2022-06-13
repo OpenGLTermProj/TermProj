@@ -10,8 +10,8 @@ const char* logl_root = "C:/repo/TermProj";
 State gameState = State::Lobby;
 MousePos buttonSelected = MousePos::Idle;
 GameSequence sequence = GameSequence::Ready;
-float sequenceStartTime =0.0f;
-float fireworkDelta = 0.0f;
+float sequenceStartTime = 0.0f;
+float fireworkDelta = 5.0f;
 
 
 Shader textShader;
